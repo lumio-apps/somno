@@ -520,4 +520,17 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get wellbeingMissing =>
       'Digital Wellbeing is not on this phone. Settings opened instead.';
+
+  @override
+  String get sectionReminder => 'Reminder';
+
+  @override
+  String get bedtimeReminder => 'Bedtime reminder';
+
+  @override
+  String get reminderTime => 'Remind me at';
+
+  @override
+  String get reminderNote =>
+      'One gentle notification every day at this time. To save battery, Android may deliver it a few minutes late.';
 }

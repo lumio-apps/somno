@@ -61,6 +61,9 @@ class AppState extends ChangeNotifier {
     settings = await _store.load();
     sessions = await _db.all();
     appVersion = await _native.appVersion();
+    if (settings.reminderEnabled) {
+      await _syncReminder();
+    }
     loaded = true;
     notifyListeners();
     if (settings.onboarded) {
@@ -186,9 +189,23 @@ class AppState extends ChangeNotifier {
   Future<void> updateSettings(
     SomnoSettings Function(SomnoSettings current) change,
   ) async {
+    final before = settings;
     settings = change(settings);
     notifyListeners();
     await _store.save(settings);
+    if (before.reminderEnabled != settings.reminderEnabled ||
+        before.reminderMinute != settings.reminderMinute ||
+        before.localeCode != settings.localeCode) {
+      await _syncReminder();
+    }
+  }
+
+  Future<void> _syncReminder() {
+    return _native.setReminder(
+      enabled: settings.reminderEnabled,
+      minute: settings.reminderMinute,
+      localeCode: settings.localeCode,
+    );
   }
 
   Future<void> setTracking(bool on) async {

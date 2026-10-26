@@ -514,4 +514,17 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get wellbeingMissing =>
       'इस फ़ोन में डिजिटल वेलबीइंग नहीं है। इसकी जगह सेटिंग्स खुल गईं।';
+
+  @override
+  String get sectionReminder => 'याद दिलाना';
+
+  @override
+  String get bedtimeReminder => 'सोने की याद';
+
+  @override
+  String get reminderTime => 'इस समय याद दिलाएँ';
+
+  @override
+  String get reminderNote =>
+      'रोज़ इस समय एक हल्का नोटिफ़िकेशन। बैटरी बचाने के लिए Android इसे कुछ मिनट देर से भी भेज सकता है।';
 }

@@ -49,6 +49,8 @@ class SomnoSettings {
     this.onboarded = false,
     this.autoUpdateCheck = true,
     this.accentIndex = 0,
+    this.reminderEnabled = false,
+    this.reminderMinute = 22 * 60 + 30,
   });
 
   final TrackingMode mode;
@@ -73,6 +75,10 @@ class SomnoSettings {
   /// Index into the accent colours in palette.dart.
   final int accentIndex;
 
+  /// Daily bedtime reminder and its time in minutes after midnight.
+  final bool reminderEnabled;
+  final int reminderMinute;
+
   SomnoSettings copyWith({
     TrackingMode? mode,
     int? nightStart,
@@ -88,6 +94,8 @@ class SomnoSettings {
     bool? onboarded,
     bool? autoUpdateCheck,
     int? accentIndex,
+    bool? reminderEnabled,
+    int? reminderMinute,
   }) {
     return SomnoSettings(
       mode: mode ?? this.mode,
@@ -104,6 +112,8 @@ class SomnoSettings {
       onboarded: onboarded ?? this.onboarded,
       autoUpdateCheck: autoUpdateCheck ?? this.autoUpdateCheck,
       accentIndex: accentIndex ?? this.accentIndex,
+      reminderEnabled: reminderEnabled ?? this.reminderEnabled,
+      reminderMinute: reminderMinute ?? this.reminderMinute,
     );
   }
 }

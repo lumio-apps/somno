@@ -46,6 +46,15 @@ class MainActivity : FlutterActivity() {
                     openBatterySettings()
                     result.success(null)
                 }
+                "setReminder" -> {
+                    Reminder.configure(
+                        this,
+                        call.argument<Boolean>("enabled") ?: false,
+                        call.argument<Int>("minute") ?: (22 * 60 + 30),
+                        call.argument<String>("locale") ?: ""
+                    )
+                    result.success(null)
+                }
                 "appVersion" -> result.success(appVersion())
                 "openWellbeing" -> result.success(openWellbeing())
                 "openUrl" -> {

@@ -33,6 +33,24 @@ class NativeBridge {
     }
   }
 
+  /// Turns the daily bedtime reminder on or off. [localeCode] is the app
+  /// language, or empty to follow the phone.
+  Future<void> setReminder({
+    required bool enabled,
+    required int minute,
+    required String localeCode,
+  }) async {
+    try {
+      await _channel.invokeMethod<void>('setReminder', <String, Object>{
+        'enabled': enabled,
+        'minute': minute,
+        'locale': localeCode,
+      });
+    } on Exception {
+      // Not running on Android (for example in tests): nothing to do.
+    }
+  }
+
   /// The installed version name, for example "1.0.1". Empty when unknown.
   Future<String> appVersion() async {
     try {

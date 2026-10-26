@@ -4,4 +4,7 @@
     <string name="channel_name">Sleep tracking</string>
     <string name="notif_title">Somno is tracking sleep</string>
     <string name="notif_text">Only screen on and off. Nothing leaves your phone.</string>
+    <string name="reminder_channel">Bedtime reminder</string>
+    <string name="reminder_title">Time to wind down</string>
+    <string name="reminder_text">It is almost your bedtime. Put the phone down and rest well.</string>
 </resources>

@@ -301,5 +301,9 @@
   "accentBlue": "Blue",
   "wellbeing": "Digital Wellbeing",
   "wellbeingNote": "See your screen time in Android's own page. It stays on Android; Somno does not read it.",
-  "wellbeingMissing": "Digital Wellbeing is not on this phone. Settings opened instead."
+  "wellbeingMissing": "Digital Wellbeing is not on this phone. Settings opened instead.",
+  "sectionReminder": "Reminder",
+  "bedtimeReminder": "Bedtime reminder",
+  "reminderTime": "Remind me at",
+  "reminderNote": "One gentle notification every day at this time. To save battery, Android may deliver it a few minutes late."
 }

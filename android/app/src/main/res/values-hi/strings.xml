@@ -4,4 +4,7 @@
     <string name="channel_name">नींद ट्रैकिंग</string>
     <string name="notif_title">Somno नींद ट्रैक कर रहा है</string>
     <string name="notif_text">सिर्फ़ स्क्रीन ऑन और ऑफ़। कुछ भी फ़ोन से बाहर नहीं जाता।</string>
+    <string name="reminder_channel">सोने की याद</string>
+    <string name="reminder_title">आराम करने का समय</string>
+    <string name="reminder_text">सोने का समय हो गया है। फ़ोन रखिए और आराम से सोइए।</string>
 </resources>

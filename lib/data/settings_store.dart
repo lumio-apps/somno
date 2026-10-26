@@ -31,6 +31,9 @@ class SettingsStore {
       onboarded: p.getBool('onboarded') ?? d.onboarded,
       autoUpdateCheck: p.getBool('auto_update_check') ?? d.autoUpdateCheck,
       accentIndex: (p.getInt('accent') ?? d.accentIndex).clamp(0, 3).toInt(),
+      reminderEnabled: p.getBool('reminder_enabled') ?? d.reminderEnabled,
+      reminderMinute:
+          (p.getInt('reminder_minute') ?? d.reminderMinute).clamp(0, 1439).toInt(),
     );
   }
 
@@ -53,6 +56,8 @@ class SettingsStore {
     await p.setBool('onboarded', s.onboarded);
     await p.setBool('auto_update_check', s.autoUpdateCheck);
     await p.setInt('accent', s.accentIndex);
+    await p.setBool('reminder_enabled', s.reminderEnabled);
+    await p.setInt('reminder_minute', s.reminderMinute);
   }
 
   Future<int?> loadLastUpdateCheck() async {

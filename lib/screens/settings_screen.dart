@@ -101,6 +101,21 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
+  Future<void> _pickReminder(BuildContext context, AppState app) async {
+    final l = AppLocalizations.of(context);
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: _tod(app.settings.reminderMinute),
+      helpText: l.reminderTime,
+    );
+    if (picked == null) {
+      return;
+    }
+    await app.updateSettings(
+      (cur) => cur.copyWith(reminderMinute: picked.hour * 60 + picked.minute),
+    );
+  }
+
   String _windowText(BuildContext context, int start, int end) {
     return '${minuteOfDayText(context, start)} – ${minuteOfDayText(context, end)}';
   }
@@ -254,6 +269,51 @@ class SettingsScreen extends StatelessWidget {
             padding: const EdgeInsets.only(top: 4),
             child: Text(
               l.guideline,
+              style: TextStyle(fontSize: 12, height: 1.5, color: p.muted),
+            ),
+          ),
+          SectionLabel(l.sectionReminder),
+          Container(
+            constraints: const BoxConstraints(minHeight: 56),
+            decoration: BoxDecoration(
+              border: Border(bottom: BorderSide(color: p.line)),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l.bedtimeReminder,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: p.text,
+                    ),
+                  ),
+                ),
+                Switch(
+                  value: s.reminderEnabled,
+                  onChanged: (v) {
+                    if (v) {
+                      app.requestNotifications();
+                    }
+                    app.updateSettings(
+                      (cur) => cur.copyWith(reminderEnabled: v),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+          if (s.reminderEnabled)
+            SettingRow(
+              label: l.reminderTime,
+              value: minuteOfDayText(context, s.reminderMinute),
+              onTap: () => _pickReminder(context, app),
+            ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              l.reminderNote,
               style: TextStyle(fontSize: 12, height: 1.5, color: p.muted),
             ),
           ),

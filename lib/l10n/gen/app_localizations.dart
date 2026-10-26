@@ -1003,6 +1003,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Digital Wellbeing is not on this phone. Settings opened instead.'**
   String get wellbeingMissing;
+
+  /// No description provided for @sectionReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder'**
+  String get sectionReminder;
+
+  /// No description provided for @bedtimeReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Bedtime reminder'**
+  String get bedtimeReminder;
+
+  /// No description provided for @reminderTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me at'**
+  String get reminderTime;
+
+  /// No description provided for @reminderNote.
+  ///
+  /// In en, this message translates to:
+  /// **'One gentle notification every day at this time. To save battery, Android may deliver it a few minutes late.'**
+  String get reminderNote;
 }
 
 class _AppLocalizationsDelegate
