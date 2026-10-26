@@ -9,6 +9,7 @@ import '../ui/format.dart';
 import '../ui/palette.dart';
 import '../ui/widgets.dart';
 import 'battery_guide.dart';
+import 'update_dialog.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -55,6 +56,26 @@ class SettingsScreen extends StatelessWidget {
     );
     if (year != null) {
       await app.updateSettings((cur) => cur.copyWith(birthYear: year));
+    }
+  }
+
+  Future<void> _checkUpdates(BuildContext context, AppState app) async {
+    final l = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final result = await app.checkForUpdates();
+    if (!context.mounted) {
+      return;
+    }
+    switch (result) {
+      case UpdateResult.available:
+        final info = app.availableUpdate;
+        if (info != null) {
+          await showUpdateDialog(context, app, info);
+        }
+      case UpdateResult.upToDate:
+        messenger.showSnackBar(SnackBar(content: Text(l.upToDate)));
+      case UpdateResult.failed:
+        messenger.showSnackBar(SnackBar(content: Text(l.updateFailed)));
     }
   }
 
@@ -262,6 +283,47 @@ class SettingsScreen extends StatelessWidget {
                 ),
               );
             },
+          ),
+          SectionLabel(l.sectionUpdates),
+          SettingRow(
+            label: l.checkUpdates,
+            value: app.checkingUpdate
+                ? l.checking
+                : l.versionLabel(app.appVersion.isEmpty ? '–' : app.appVersion),
+            onTap: app.checkingUpdate ? () {} : () => _checkUpdates(context, app),
+          ),
+          Container(
+            constraints: const BoxConstraints(minHeight: 56),
+            decoration: BoxDecoration(
+              border: Border(bottom: BorderSide(color: p.line)),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l.autoCheckUpdates,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: p.text,
+                    ),
+                  ),
+                ),
+                Switch(
+                  value: s.autoUpdateCheck,
+                  onChanged: (v) => app.updateSettings(
+                    (cur) => cur.copyWith(autoUpdateCheck: v),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              l.updatesNet,
+              style: TextStyle(fontSize: 12, height: 1.5, color: p.muted),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16),

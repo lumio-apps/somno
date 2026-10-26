@@ -266,7 +266,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get privacyNote =>
-      'सारा डेटा इसी फ़ोन में रहता है। न अकाउंट, न विज्ञापन, न इंटरनेट।';
+      'सारा डेटा इसी फ़ोन में रहता है। न अकाउंट, न विज्ञापन, न ट्रैकिंग। इंटरनेट सिर्फ़ अपडेट खोजने के लिए है।';
 
   @override
   String get decrease => 'घटाएं';
@@ -341,7 +341,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get batteryFoot =>
-      'Somno सिर्फ़ स्क्रीन ऑन और ऑफ़ सुनता है। बैटरी बहुत कम लेता है और इंटरनेट से कभी नहीं जुड़ता।';
+      'Somno सिर्फ़ स्क्रीन ऑन और ऑफ़ सुनता है। बैटरी बहुत कम लेता है और आपका नींद का डेटा कहीं नहीं भेजता।';
 
   @override
   String get openBatterySettings => 'बैटरी सेटिंग्स खोलें';
@@ -398,4 +398,55 @@ class AppLocalizationsHi extends AppLocalizations {
   String stepOf(int step, int total) {
     return 'चरण $step/$total';
   }
+
+  @override
+  String get sectionUpdates => 'अपडेट';
+
+  @override
+  String get checkUpdates => 'अपडेट जाँचें';
+
+  @override
+  String get autoCheckUpdates => 'अपने-आप जाँचें';
+
+  @override
+  String versionLabel(String version) {
+    return 'वर्ज़न $version';
+  }
+
+  @override
+  String get checking => 'जाँच रहे हैं…';
+
+  @override
+  String get upToDate => 'आपके पास नवीनतम वर्ज़न है।';
+
+  @override
+  String get updateFailed =>
+      'जाँच नहीं हो सकी। इंटरनेट देखें और फिर कोशिश करें।';
+
+  @override
+  String updateAvailableTitle(String version) {
+    return 'अपडेट $version उपलब्ध';
+  }
+
+  @override
+  String updateBanner(String version) {
+    return 'नया वर्ज़न $version उपलब्ध है।';
+  }
+
+  @override
+  String get download => 'डाउनलोड';
+
+  @override
+  String get later => 'बाद में';
+
+  @override
+  String get view => 'देखें';
+
+  @override
+  String get updateNote =>
+      'अपडेट करने पर आपका नींद का डेटा सुरक्षित रहता है। डाउनलोड के बाद फ़ाइल खोलकर इंस्टॉल करें।';
+
+  @override
+  String get updatesNet =>
+      'इंटरनेट सिर्फ़ अपडेट खोजने के लिए इस्तेमाल होता है। और कुछ नहीं भेजा जाता।';
 }

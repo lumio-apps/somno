@@ -33,6 +33,27 @@ class NativeBridge {
     }
   }
 
+  /// The installed version name, for example "1.0.1". Empty when unknown.
+  Future<String> appVersion() async {
+    try {
+      final result = await _channel.invokeMethod<String>('appVersion');
+      return result ?? '';
+    } on Exception {
+      return '';
+    }
+  }
+
+  /// Opens an https link in the browser. False when nothing could open it.
+  Future<bool> openUrl(String url) async {
+    try {
+      final result = await _channel
+          .invokeMethod<bool>('openUrl', <String, String>{'url': url});
+      return result ?? false;
+    } on Exception {
+      return false;
+    }
+  }
+
   /// True when Android will not battery-restrict the app.
   Future<bool> isBatteryUnrestricted() async {
     try {

@@ -29,6 +29,7 @@ class SettingsStore {
       localeCode: p.getString('locale_code') ?? d.localeCode,
       trackingEnabled: p.getBool('tracking_enabled') ?? d.trackingEnabled,
       onboarded: p.getBool('onboarded') ?? d.onboarded,
+      autoUpdateCheck: p.getBool('auto_update_check') ?? d.autoUpdateCheck,
     );
   }
 
@@ -49,6 +50,17 @@ class SettingsStore {
     await p.setString('locale_code', s.localeCode);
     await p.setBool('tracking_enabled', s.trackingEnabled);
     await p.setBool('onboarded', s.onboarded);
+    await p.setBool('auto_update_check', s.autoUpdateCheck);
+  }
+
+  Future<int?> loadLastUpdateCheck() async {
+    final p = await SharedPreferences.getInstance();
+    return p.getInt('last_update_check_ms');
+  }
+
+  Future<void> saveLastUpdateCheck(int value) async {
+    final p = await SharedPreferences.getInstance();
+    await p.setInt('last_update_check_ms', value);
   }
 
   Future<int?> loadLastOff() async {

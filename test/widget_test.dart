@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:somno/core/sleep_logic.dart';
 import 'package:somno/core/stats.dart';
+import 'package:somno/core/version.dart';
+import 'package:somno/data/update_service.dart';
 import 'package:somno/data/models.dart';
 
 int at(int day, int hour, [int minute = 0]) =>
@@ -19,6 +21,8 @@ List<SleepSession> run(
 }
 
 void main() {
+  versionTests();
+
   group('sleep detection', () {
     test('a night gap becomes one session', () {
       final sessions = run([
@@ -161,6 +165,28 @@ void main() {
       expect(days.last.minutes, 480);
       expect(days.first.day, DateTime(2026, 10, 17));
       expect(averageMinutes(days), 480);
+    });
+  });
+}
+
+void versionTests() {
+  group('versions', () {
+    test('newer and older', () {
+      expect(isNewerVersion('v1.0.1', '1.0.0'), isTrue);
+      expect(isNewerVersion('v1.10.0', '1.9.9'), isTrue);
+      expect(isNewerVersion('v2.0', '1.9.9'), isTrue);
+      expect(isNewerVersion('v1.0.0', '1.0.0'), isFalse);
+      expect(isNewerVersion('v1.0.0', '1.0.1'), isFalse);
+      expect(isNewerVersion('1.0.1+3', '1.0.1'), isFalse);
+    });
+
+    test('release json', () {
+      final info = UpdateService.parse(
+        '{"tag_name":"v1.0.1","html_url":"https://github.com/lumio-apps/somno/releases/tag/v1.0.1","body":"Fixes","assets":[{"name":"Somno-v1.0.1.apk","browser_download_url":"https://github.com/x/Somno-v1.0.1.apk"}]}',
+      );
+      expect(info.version, '1.0.1');
+      expect(info.apkUrl, 'https://github.com/x/Somno-v1.0.1.apk');
+      expect(info.notes, 'Fixes');
     });
   });
 }

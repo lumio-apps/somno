@@ -46,6 +46,10 @@ class MainActivity : FlutterActivity() {
                     openBatterySettings()
                     result.success(null)
                 }
+                "appVersion" -> result.success(appVersion())
+                "openUrl" -> {
+                    result.success(openUrl(call.argument<String>("url")))
+                }
                 "requestNotifications" -> {
                     requestNotifications()
                     result.success(null)
@@ -77,6 +81,26 @@ class MainActivity : FlutterActivity() {
             } catch (e2: Exception) {
                 // No settings screen available.
             }
+        }
+    }
+
+    private fun appVersion(): String {
+        return try {
+            packageManager.getPackageInfo(packageName, 0).versionName ?: ""
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
+    private fun openUrl(url: String?): Boolean {
+        if (url == null || !url.startsWith("https://")) {
+            return false
+        }
+        return try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            true
+        } catch (e: Exception) {
+            false
         }
     }
 

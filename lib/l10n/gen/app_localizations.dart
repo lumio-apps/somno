@@ -575,7 +575,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyNote.
   ///
   /// In en, this message translates to:
-  /// **'All data stays on this phone. No account, no ads, no internet.'**
+  /// **'All data stays on this phone. No account, no ads, no tracking. Internet is only used to look for updates.'**
   String get privacyNote;
 
   /// No description provided for @decrease.
@@ -707,7 +707,7 @@ abstract class AppLocalizations {
   /// No description provided for @batteryFoot.
   ///
   /// In en, this message translates to:
-  /// **'Somno only listens for screen on and off. It uses very little battery and never connects to the internet.'**
+  /// **'Somno only listens for screen on and off. It uses very little battery and never sends your sleep data anywhere.'**
   String get batteryFoot;
 
   /// No description provided for @openBatterySettings.
@@ -799,6 +799,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Step {step} of {total}'**
   String stepOf(int step, int total);
+
+  /// No description provided for @sectionUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Updates'**
+  String get sectionUpdates;
+
+  /// No description provided for @checkUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Check for updates'**
+  String get checkUpdates;
+
+  /// No description provided for @autoCheckUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Check automatically'**
+  String get autoCheckUpdates;
+
+  /// No description provided for @versionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String versionLabel(String version);
+
+  /// No description provided for @checking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking…'**
+  String get checking;
+
+  /// No description provided for @upToDate.
+  ///
+  /// In en, this message translates to:
+  /// **'You have the latest version.'**
+  String get upToDate;
+
+  /// No description provided for @updateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t check. Check your internet and try again.'**
+  String get updateFailed;
+
+  /// No description provided for @updateAvailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update {version} available'**
+  String updateAvailableTitle(String version);
+
+  /// No description provided for @updateBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'New version {version} is available.'**
+  String updateBanner(String version);
+
+  /// No description provided for @download.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get download;
+
+  /// No description provided for @later.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get later;
+
+  /// No description provided for @view.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get view;
+
+  /// No description provided for @updateNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your sleep data stays safe when you update. After downloading, open the file to install.'**
+  String get updateNote;
+
+  /// No description provided for @updatesNet.
+  ///
+  /// In en, this message translates to:
+  /// **'Internet is used only to look for updates. Nothing else is sent.'**
+  String get updatesNet;
 }
 
 class _AppLocalizationsDelegate

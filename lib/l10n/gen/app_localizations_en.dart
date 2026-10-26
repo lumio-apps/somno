@@ -266,7 +266,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacyNote =>
-      'All data stays on this phone. No account, no ads, no internet.';
+      'All data stays on this phone. No account, no ads, no tracking. Internet is only used to look for updates.';
 
   @override
   String get decrease => 'Decrease';
@@ -341,7 +341,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get batteryFoot =>
-      'Somno only listens for screen on and off. It uses very little battery and never connects to the internet.';
+      'Somno only listens for screen on and off. It uses very little battery and never sends your sleep data anywhere.';
 
   @override
   String get openBatterySettings => 'Open battery settings';
@@ -398,4 +398,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String stepOf(int step, int total) {
     return 'Step $step of $total';
   }
+
+  @override
+  String get sectionUpdates => 'Updates';
+
+  @override
+  String get checkUpdates => 'Check for updates';
+
+  @override
+  String get autoCheckUpdates => 'Check automatically';
+
+  @override
+  String versionLabel(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get checking => 'Checking…';
+
+  @override
+  String get upToDate => 'You have the latest version.';
+
+  @override
+  String get updateFailed =>
+      'Couldn\'t check. Check your internet and try again.';
+
+  @override
+  String updateAvailableTitle(String version) {
+    return 'Update $version available';
+  }
+
+  @override
+  String updateBanner(String version) {
+    return 'New version $version is available.';
+  }
+
+  @override
+  String get download => 'Download';
+
+  @override
+  String get later => 'Later';
+
+  @override
+  String get view => 'View';
+
+  @override
+  String get updateNote =>
+      'Your sleep data stays safe when you update. After downloading, open the file to install.';
+
+  @override
+  String get updatesNet =>
+      'Internet is used only to look for updates. Nothing else is sent.';
 }

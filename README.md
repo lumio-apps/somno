@@ -1,7 +1,7 @@
 # Somno
 
 Offline sleep tracker. If your phone stays locked for a long stretch (3 hours by default),
-Somno counts it as sleep. No account, no ads, no internet permission, no cloud.
+Somno counts it as sleep. No account, no ads, no cloud. The only network use is an optional daily check for a newer release on GitHub (can be turned off in Settings).
 
 - Tracking modes: Night, Day or Any time, each with its own start and stop time
 - Sleep goal set from your age (National Sleep Foundation ranges)

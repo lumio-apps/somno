@@ -1,22 +1,34 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 
 import '../core/sleep_logic.dart';
+import '../core/version.dart';
 import '../data/models.dart';
 import '../data/native_bridge.dart';
 import '../data/session_db.dart';
 import '../data/settings_store.dart';
+import '../data/update_service.dart';
 
 enum SaveResult { ok, endBeforeStart, tooLong, overlap, future }
 
+enum UpdateResult { available, upToDate, failed }
+
 class AppState extends ChangeNotifier {
-  AppState({SettingsStore? store, SessionDb? db, NativeBridge? native})
-      : _store = store ?? SettingsStore(),
+  AppState({
+    SettingsStore? store,
+    SessionDb? db,
+    NativeBridge? native,
+    UpdateService? updates,
+  })  : _store = store ?? SettingsStore(),
         _db = db ?? SessionDb(),
-        _native = native ?? NativeBridge();
+        _native = native ?? NativeBridge(),
+        _updates = updates ?? UpdateService();
 
   final SettingsStore _store;
   final SessionDb _db;
   final NativeBridge _native;
+  final UpdateService _updates;
 
   SomnoSettings settings = const SomnoSettings();
   List<SleepSession> sessions = const <SleepSession>[];
@@ -27,15 +39,73 @@ class AppState extends ChangeNotifier {
 
   bool _syncing = false;
 
+  /// Installed version name, for example "1.0.0".
+  String appVersion = '';
+
+  /// A newer release found on GitHub, or null.
+  UpdateInfo? availableUpdate;
+  bool checkingUpdate = false;
+  bool _updateHidden = false;
+
+  /// The update to offer on the Today screen.
+  UpdateInfo? get updateToOffer => _updateHidden ? null : availableUpdate;
+
   Future<void> init() async {
     settings = await _store.load();
     sessions = await _db.all();
+    appVersion = await _native.appVersion();
     loaded = true;
     notifyListeners();
     if (settings.onboarded) {
       await onResume();
+      unawaited(autoCheckUpdates());
     }
   }
+
+  /// Checks at most once a day, and only when the user allows it.
+  Future<void> autoCheckUpdates() async {
+    if (!settings.autoUpdateCheck) {
+      return;
+    }
+    final last = await _store.loadLastUpdateCheck();
+    final now = DateTime.now().millisecondsSinceEpoch;
+    if (last != null && now - last < const Duration(hours: 24).inMilliseconds) {
+      return;
+    }
+    await checkForUpdates();
+  }
+
+  Future<UpdateResult> checkForUpdates() async {
+    if (checkingUpdate || appVersion.isEmpty) {
+      return UpdateResult.failed;
+    }
+    checkingUpdate = true;
+    notifyListeners();
+    try {
+      final info = await _updates.latest();
+      await _store
+          .saveLastUpdateCheck(DateTime.now().millisecondsSinceEpoch);
+      if (isNewerVersion(info.tag, appVersion)) {
+        availableUpdate = info;
+        _updateHidden = false;
+        return UpdateResult.available;
+      }
+      availableUpdate = null;
+      return UpdateResult.upToDate;
+    } on Exception {
+      return UpdateResult.failed;
+    } finally {
+      checkingUpdate = false;
+      notifyListeners();
+    }
+  }
+
+  void hideUpdateBanner() {
+    _updateHidden = true;
+    notifyListeners();
+  }
+
+  Future<bool> openUrl(String url) => _native.openUrl(url);
 
   Future<void> onResume() async {
     if (!loaded || !settings.onboarded) {

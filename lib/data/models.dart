@@ -47,6 +47,7 @@ class SomnoSettings {
     this.localeCode = '',
     this.trackingEnabled = false,
     this.onboarded = false,
+    this.autoUpdateCheck = true,
   });
 
   final TrackingMode mode;
@@ -66,6 +67,7 @@ class SomnoSettings {
   final String localeCode;
   final bool trackingEnabled;
   final bool onboarded;
+  final bool autoUpdateCheck;
 
   SomnoSettings copyWith({
     TrackingMode? mode,
@@ -80,6 +82,7 @@ class SomnoSettings {
     String? localeCode,
     bool? trackingEnabled,
     bool? onboarded,
+    bool? autoUpdateCheck,
   }) {
     return SomnoSettings(
       mode: mode ?? this.mode,
@@ -94,6 +97,7 @@ class SomnoSettings {
       localeCode: localeCode ?? this.localeCode,
       trackingEnabled: trackingEnabled ?? this.trackingEnabled,
       onboarded: onboarded ?? this.onboarded,
+      autoUpdateCheck: autoUpdateCheck ?? this.autoUpdateCheck,
     );
   }
 }

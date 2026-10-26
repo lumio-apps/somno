@@ -138,7 +138,7 @@
   "langHindi": "हिन्दी",
   "batteryGuide": "Battery setup guide",
   "open": "Open",
-  "privacyNote": "All data stays on this phone. No account, no ads, no internet.",
+  "privacyNote": "All data stays on this phone. No account, no ads, no tracking. Internet is only used to look for updates.",
   "decrease": "Decrease",
   "increase": "Increase",
   "welcomeTitle": "Welcome to Somno",
@@ -180,7 +180,7 @@
   "batteryStep1": "Tap the button below to open battery settings",
   "batteryStep2": "Find Somno in the list (choose All apps if needed)",
   "batteryStep3": "Set it to Unrestricted or Do not optimize",
-  "batteryFoot": "Somno only listens for screen on and off. It uses very little battery and never connects to the internet.",
+  "batteryFoot": "Somno only listens for screen on and off. It uses very little battery and never sends your sleep data anywhere.",
   "openBatterySettings": "Open battery settings",
   "batteryAlreadyOk": "Battery saving is already off for Somno.",
   "startTracking": "Start tracking",
@@ -239,5 +239,40 @@
         "type": "int"
       }
     }
-  }
+  },
+  "sectionUpdates": "Updates",
+  "checkUpdates": "Check for updates",
+  "autoCheckUpdates": "Check automatically",
+  "versionLabel": "Version {version}",
+  "@versionLabel": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "checking": "Checking…",
+  "upToDate": "You have the latest version.",
+  "updateFailed": "Couldn't check. Check your internet and try again.",
+  "updateAvailableTitle": "Update {version} available",
+  "@updateAvailableTitle": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateBanner": "New version {version} is available.",
+  "@updateBanner": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "download": "Download",
+  "later": "Later",
+  "view": "View",
+  "updateNote": "Your sleep data stays safe when you update. After downloading, open the file to install.",
+  "updatesNet": "Internet is used only to look for updates. Nothing else is sent."
 }
