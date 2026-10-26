@@ -575,7 +575,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyNote.
   ///
   /// In en, this message translates to:
-  /// **'All data stays on this phone. No account, no ads, no tracking. Internet is only used to look for updates.'**
+  /// **'All data stays on this phone. No account, no ads, no tracking. Internet is only used to check for and download updates.'**
   String get privacyNote;
 
   /// No description provided for @decrease.
@@ -875,13 +875,13 @@ abstract class AppLocalizations {
   /// No description provided for @updateNote.
   ///
   /// In en, this message translates to:
-  /// **'Your sleep data stays safe when you update. After downloading, open the file to install.'**
+  /// **'Your sleep data stays safe when you update.'**
   String get updateNote;
 
   /// No description provided for @updatesNet.
   ///
   /// In en, this message translates to:
-  /// **'Internet is used only to look for updates. Nothing else is sent.'**
+  /// **'Internet is used only to look for and download updates. Nothing else is sent.'**
   String get updatesNet;
 
   /// No description provided for @insightsTitle.
@@ -1027,6 +1027,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'One gentle notification every day at this time. To save battery, Android may deliver it a few minutes late.'**
   String get reminderNote;
+
+  /// No description provided for @downloadInstall.
+  ///
+  /// In en, this message translates to:
+  /// **'Download and install'**
+  String get downloadInstall;
+
+  /// No description provided for @install.
+  ///
+  /// In en, this message translates to:
+  /// **'Install'**
+  String get install;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgain;
+
+  /// No description provided for @downloadingPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading… {percent}%'**
+  String downloadingPercent(int percent);
+
+  /// No description provided for @installPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Android needs your OK once. In the screen that opened, allow Somno to install apps, then come back and tap Install.'**
+  String get installPermission;
+
+  /// No description provided for @updateDownloadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed. Check your internet and try again.'**
+  String get updateDownloadFailed;
 }
 
 class _AppLocalizationsDelegate

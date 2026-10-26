@@ -266,7 +266,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get privacyNote =>
-      'सारा डेटा इसी फ़ोन में रहता है। न अकाउंट, न विज्ञापन, न ट्रैकिंग। इंटरनेट सिर्फ़ अपडेट खोजने के लिए है।';
+      'सारा डेटा इसी फ़ोन में रहता है। न अकाउंट, न विज्ञापन, न ट्रैकिंग। इंटरनेट सिर्फ़ अपडेट खोजने और डाउनलोड करने के लिए है।';
 
   @override
   String get decrease => 'घटाएं';
@@ -443,12 +443,11 @@ class AppLocalizationsHi extends AppLocalizations {
   String get view => 'देखें';
 
   @override
-  String get updateNote =>
-      'अपडेट करने पर आपका नींद का डेटा सुरक्षित रहता है। डाउनलोड के बाद फ़ाइल खोलकर इंस्टॉल करें।';
+  String get updateNote => 'अपडेट करने पर आपका नींद का डेटा सुरक्षित रहता है।';
 
   @override
   String get updatesNet =>
-      'इंटरनेट सिर्फ़ अपडेट खोजने के लिए इस्तेमाल होता है। और कुछ नहीं भेजा जाता।';
+      'इंटरनेट सिर्फ़ अपडेट खोजने और डाउनलोड करने के लिए इस्तेमाल होता है। और कुछ नहीं भेजा जाता।';
 
   @override
   String get insightsTitle => 'इस हफ़्ते';
@@ -527,4 +526,26 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get reminderNote =>
       'रोज़ इस समय एक हल्का नोटिफ़िकेशन। बैटरी बचाने के लिए Android इसे कुछ मिनट देर से भी भेज सकता है।';
+
+  @override
+  String get downloadInstall => 'डाउनलोड और इंस्टॉल';
+
+  @override
+  String get install => 'इंस्टॉल';
+
+  @override
+  String get tryAgain => 'फिर कोशिश करें';
+
+  @override
+  String downloadingPercent(int percent) {
+    return 'डाउनलोड हो रहा है… $percent%';
+  }
+
+  @override
+  String get installPermission =>
+      'Android एक बार आपकी अनुमति माँगता है। जो स्क्रीन खुली है उसमें Somno को ऐप इंस्टॉल करने दें, फिर वापस आकर इंस्टॉल दबाएँ।';
+
+  @override
+  String get updateDownloadFailed =>
+      'डाउनलोड नहीं हो सका। इंटरनेट देखें और फिर कोशिश करें।';
 }

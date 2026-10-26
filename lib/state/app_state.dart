@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 
@@ -14,6 +15,10 @@ import '../data/update_service.dart';
 enum SaveResult { ok, endBeforeStart, tooLong, overlap, future }
 
 enum UpdateResult { available, upToDate, failed }
+
+/// started: the Android installer opened. permission: the user must allow
+/// installs from Somno first. browser: the release has no APK file.
+enum InstallResult { started, permission, browser, failed }
 
 class AppState extends ChangeNotifier {
   AppState({
@@ -116,6 +121,55 @@ class AppState extends ChangeNotifier {
   }
 
   Future<bool> openUrl(String url) => _native.openUrl(url);
+
+  String? _apkPath;
+  String? _apkTag;
+
+  /// Downloads the new APK inside the app (once) and opens the installer.
+  Future<InstallResult> installUpdate(
+    UpdateInfo info,
+    void Function(double progress) onProgress,
+  ) async {
+    final url = info.apkUrl;
+    if (url == null) {
+      await _native.openUrl(info.pageUrl);
+      return InstallResult.browser;
+    }
+    try {
+      var path = _apkPath;
+      if (path == null || _apkTag != info.tag || !File(path).existsSync()) {
+        final dir = await _native.updatesDir();
+        if (dir.isEmpty) {
+          return InstallResult.failed;
+        }
+        final folder = Directory(dir);
+        if (folder.existsSync()) {
+          for (final old in folder.listSync()) {
+            if (old is File) {
+              old.deleteSync();
+            }
+          }
+        }
+        path = await _updates.download(
+          url,
+          '$dir/Somno-${info.tag}.apk',
+          onProgress,
+        );
+        _apkPath = path;
+        _apkTag = info.tag;
+      }
+      final result = await _native.installApk(path);
+      if (result == 'ok') {
+        return InstallResult.started;
+      }
+      if (result == 'permission') {
+        return InstallResult.permission;
+      }
+      return InstallResult.failed;
+    } on Exception {
+      return InstallResult.failed;
+    }
+  }
 
   /// False when Digital Wellbeing was not found and Settings opened instead.
   Future<bool> openWellbeing() => _native.openWellbeing();

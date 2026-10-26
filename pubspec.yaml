@@ -2,7 +2,7 @@ name: somno
 description: "Somno - offline sleep tracker. No account, no ads, no internet."
 publish_to: 'none'
 
-version: 1.2.0+4
+version: 1.2.1+5
 
 environment:
   sdk: ^3.5.0

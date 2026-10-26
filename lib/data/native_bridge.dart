@@ -51,6 +51,28 @@ class NativeBridge {
     }
   }
 
+  /// Folder in the app cache where downloaded updates are kept.
+  Future<String> updatesDir() async {
+    try {
+      final result = await _channel.invokeMethod<String>('updatesDir');
+      return result ?? '';
+    } on Exception {
+      return '';
+    }
+  }
+
+  /// Opens the Android installer for [path]. Returns "ok", "permission"
+  /// (the user must first allow installs from Somno) or "error".
+  Future<String> installApk(String path) async {
+    try {
+      final result = await _channel
+          .invokeMethod<String>('installApk', <String, String>{'path': path});
+      return result ?? 'error';
+    } on Exception {
+      return 'error';
+    }
+  }
+
   /// The installed version name, for example "1.0.1". Empty when unknown.
   Future<String> appVersion() async {
     try {

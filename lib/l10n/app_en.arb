@@ -138,7 +138,7 @@
   "langHindi": "हिन्दी",
   "batteryGuide": "Battery setup guide",
   "open": "Open",
-  "privacyNote": "All data stays on this phone. No account, no ads, no tracking. Internet is only used to look for updates.",
+  "privacyNote": "All data stays on this phone. No account, no ads, no tracking. Internet is only used to check for and download updates.",
   "decrease": "Decrease",
   "increase": "Increase",
   "welcomeTitle": "Welcome to Somno",
@@ -273,8 +273,8 @@
   "download": "Download",
   "later": "Later",
   "view": "View",
-  "updateNote": "Your sleep data stays safe when you update. After downloading, open the file to install.",
-  "updatesNet": "Internet is used only to look for updates. Nothing else is sent.",
+  "updateNote": "Your sleep data stays safe when you update.",
+  "updatesNet": "Internet is used only to look for and download updates. Nothing else is sent.",
   "insightsTitle": "This week",
   "streakLabel": "Streak",
   "consistencyLabel": "Consistency",
@@ -305,5 +305,18 @@
   "sectionReminder": "Reminder",
   "bedtimeReminder": "Bedtime reminder",
   "reminderTime": "Remind me at",
-  "reminderNote": "One gentle notification every day at this time. To save battery, Android may deliver it a few minutes late."
+  "reminderNote": "One gentle notification every day at this time. To save battery, Android may deliver it a few minutes late.",
+  "downloadInstall": "Download and install",
+  "install": "Install",
+  "tryAgain": "Try again",
+  "downloadingPercent": "Downloading… {percent}%",
+  "@downloadingPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "installPermission": "Android needs your OK once. In the screen that opened, allow Somno to install apps, then come back and tap Install.",
+  "updateDownloadFailed": "Download failed. Check your internet and try again."
 }

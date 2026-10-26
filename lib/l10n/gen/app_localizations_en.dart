@@ -266,7 +266,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacyNote =>
-      'All data stays on this phone. No account, no ads, no tracking. Internet is only used to look for updates.';
+      'All data stays on this phone. No account, no ads, no tracking. Internet is only used to check for and download updates.';
 
   @override
   String get decrease => 'Decrease';
@@ -443,12 +443,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get view => 'View';
 
   @override
-  String get updateNote =>
-      'Your sleep data stays safe when you update. After downloading, open the file to install.';
+  String get updateNote => 'Your sleep data stays safe when you update.';
 
   @override
   String get updatesNet =>
-      'Internet is used only to look for updates. Nothing else is sent.';
+      'Internet is used only to look for and download updates. Nothing else is sent.';
 
   @override
   String get insightsTitle => 'This week';
@@ -533,4 +532,26 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get reminderNote =>
       'One gentle notification every day at this time. To save battery, Android may deliver it a few minutes late.';
+
+  @override
+  String get downloadInstall => 'Download and install';
+
+  @override
+  String get install => 'Install';
+
+  @override
+  String get tryAgain => 'Try again';
+
+  @override
+  String downloadingPercent(int percent) {
+    return 'Downloading… $percent%';
+  }
+
+  @override
+  String get installPermission =>
+      'Android needs your OK once. In the screen that opened, allow Somno to install apps, then come back and tap Install.';
+
+  @override
+  String get updateDownloadFailed =>
+      'Download failed. Check your internet and try again.';
 }

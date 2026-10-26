@@ -53,6 +53,62 @@ class UpdateService {
     }
   }
 
+  /// Downloads the APK at [url] to [path] and reports progress from 0 to 1.
+  /// Only github.com links are accepted. Throws on any problem.
+  Future<String> download(
+    String url,
+    String path,
+    void Function(double progress) onProgress,
+  ) async {
+    final uri = Uri.parse(url);
+    if (uri.scheme != 'https' || uri.host != 'github.com') {
+      throw const HttpException('Unexpected download link');
+    }
+    final client = HttpClient()
+      ..connectionTimeout = const Duration(seconds: 10);
+    final part = File('$path.part');
+    try {
+      final request = await client.getUrl(uri);
+      request.headers.set('User-Agent', 'Somno');
+      final response =
+          await request.close().timeout(const Duration(seconds: 20));
+      if (response.statusCode != 200) {
+        await response.drain<void>();
+        throw HttpException('GitHub answered ${response.statusCode}');
+      }
+      final total = response.contentLength;
+      var received = 0;
+      final sink = part.openWrite();
+      try {
+        await for (final chunk
+            in response.timeout(const Duration(seconds: 30))) {
+          sink.add(chunk);
+          received += chunk.length;
+          if (total > 0) {
+            onProgress(received / total);
+          }
+        }
+      } finally {
+        await sink.close();
+      }
+      if (total > 0 && received != total) {
+        throw const HttpException('Download was cut off');
+      }
+      if (received < 1000000) {
+        throw const HttpException('File is too small to be the app');
+      }
+      await part.rename(path);
+      return path;
+    } on Exception {
+      if (part.existsSync()) {
+        part.deleteSync();
+      }
+      rethrow;
+    } finally {
+      client.close(force: true);
+    }
+  }
+
   /// Reads the GitHub "latest release" JSON.
   static UpdateInfo parse(String body) {
     final json = jsonDecode(body);

@@ -55,6 +55,12 @@ class MainActivity : FlutterActivity() {
                     )
                     result.success(null)
                 }
+                "updatesDir" -> {
+                    val dir = java.io.File(cacheDir, "updates")
+                    dir.mkdirs()
+                    result.success(dir.absolutePath)
+                }
+                "installApk" -> result.success(installApk(call.argument<String>("path")))
                 "appVersion" -> result.success(appVersion())
                 "openWellbeing" -> result.success(openWellbeing())
                 "openUrl" -> {
@@ -99,6 +105,42 @@ class MainActivity : FlutterActivity() {
             packageManager.getPackageInfo(packageName, 0).versionName ?: ""
         } catch (e: Exception) {
             ""
+        }
+    }
+
+    /** Returns "ok", "permission" (user must allow installs) or "error". */
+    private fun installApk(path: String?): String {
+        if (path == null) {
+            return "error"
+        }
+        val file = java.io.File(path)
+        if (!file.exists()) {
+            return "error"
+        }
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                !packageManager.canRequestPackageInstalls()
+            ) {
+                startActivity(
+                    Intent(
+                        Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,
+                        Uri.parse("package:$packageName")
+                    )
+                )
+                return "permission"
+            }
+            val uri = androidx.core.content.FileProvider.getUriForFile(
+                this,
+                "$packageName.fileprovider",
+                file
+            )
+            val intent = Intent(Intent.ACTION_VIEW)
+                .setDataAndType(uri, "application/vnd.android.package-archive")
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            startActivity(intent)
+            return "ok"
+        } catch (e: Exception) {
+            return "error"
         }
     }
 
