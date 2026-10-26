@@ -274,5 +274,32 @@
   "later": "Later",
   "view": "View",
   "updateNote": "Your sleep data stays safe when you update. After downloading, open the file to install.",
-  "updatesNet": "Internet is used only to look for updates. Nothing else is sent."
+  "updatesNet": "Internet is used only to look for updates. Nothing else is sent.",
+  "insightsTitle": "This week",
+  "streakLabel": "Streak",
+  "consistencyLabel": "Consistency",
+  "debtLabel": "Sleep debt",
+  "daysCount": "{days, plural, =1{1 day} other{{days} days}}",
+  "@daysCount": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "debtShort": "short",
+  "debtAhead": "ahead",
+  "debtEven": "on goal",
+  "needMoreDays": "needs 3+ days",
+  "insightsNote": "A day counts for your streak at 90% of your goal. Consistency compares bed and wake times over 7 days. Naps (20 min to 1.5 h) are kept apart.",
+  "napsToday": "Naps today",
+  "napTag": "Nap",
+  "accentColor": "Accent colour",
+  "accentTeal": "Teal",
+  "accentPurple": "Purple",
+  "accentAmber": "Amber",
+  "accentBlue": "Blue",
+  "wellbeing": "Digital Wellbeing",
+  "wellbeingNote": "See your screen time in Android's own page. It stays on Android; Somno does not read it.",
+  "wellbeingMissing": "Digital Wellbeing is not on this phone. Settings opened instead."
 }

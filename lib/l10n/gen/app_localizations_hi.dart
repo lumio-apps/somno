@@ -449,4 +449,69 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get updatesNet =>
       'इंटरनेट सिर्फ़ अपडेट खोजने के लिए इस्तेमाल होता है। और कुछ नहीं भेजा जाता।';
+
+  @override
+  String get insightsTitle => 'इस हफ़्ते';
+
+  @override
+  String get streakLabel => 'स्ट्रीक';
+
+  @override
+  String get consistencyLabel => 'नियमितता';
+
+  @override
+  String get debtLabel => 'नींद का कर्ज़';
+
+  @override
+  String daysCount(int days) {
+    return '$days दिन';
+  }
+
+  @override
+  String get debtShort => 'कम';
+
+  @override
+  String get debtAhead => 'ज़्यादा';
+
+  @override
+  String get debtEven => 'लक्ष्य पर';
+
+  @override
+  String get needMoreDays => '3+ दिन चाहिए';
+
+  @override
+  String get insightsNote =>
+      'लक्ष्य का 90% पूरा होने पर दिन स्ट्रीक में गिना जाता है। नियमितता 7 दिन के सोने-उठने का समय मिलाती है। झपकी (20 मिनट से 1.5 घंटे) अलग रखी जाती है।';
+
+  @override
+  String get napsToday => 'आज की झपकी';
+
+  @override
+  String get napTag => 'झपकी';
+
+  @override
+  String get accentColor => 'मुख्य रंग';
+
+  @override
+  String get accentTeal => 'टील';
+
+  @override
+  String get accentPurple => 'बैंगनी';
+
+  @override
+  String get accentAmber => 'अंबर';
+
+  @override
+  String get accentBlue => 'नीला';
+
+  @override
+  String get wellbeing => 'डिजिटल वेलबीइंग';
+
+  @override
+  String get wellbeingNote =>
+      'Android के अपने पेज पर स्क्रीन टाइम देखें। यह Android में ही रहता है; Somno इसे नहीं पढ़ता।';
+
+  @override
+  String get wellbeingMissing =>
+      'इस फ़ोन में डिजिटल वेलबीइंग नहीं है। इसकी जगह सेटिंग्स खुल गईं।';
 }

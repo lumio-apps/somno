@@ -47,6 +47,7 @@ class MainActivity : FlutterActivity() {
                     result.success(null)
                 }
                 "appVersion" -> result.success(appVersion())
+                "openWellbeing" -> result.success(openWellbeing())
                 "openUrl" -> {
                     result.success(openUrl(call.argument<String>("url")))
                 }
@@ -90,6 +91,40 @@ class MainActivity : FlutterActivity() {
         } catch (e: Exception) {
             ""
         }
+    }
+
+    private fun openWellbeing(): Boolean {
+        val explicit = Intent().setClassName(
+            "com.google.android.apps.wellbeing",
+            "com.google.android.apps.wellbeing.settings.TopLevelSettingsActivity"
+        )
+        try {
+            startActivity(explicit)
+            return true
+        } catch (e: Exception) {
+            // Not a Google Wellbeing phone, try the launcher of known apps.
+        }
+        val packages = listOf(
+            "com.google.android.apps.wellbeing",
+            "com.samsung.android.forest"
+        )
+        for (pkg in packages) {
+            try {
+                val launch = packageManager.getLaunchIntentForPackage(pkg)
+                if (launch != null) {
+                    startActivity(launch)
+                    return true
+                }
+            } catch (e: Exception) {
+                // Try the next one.
+            }
+        }
+        try {
+            startActivity(Intent(Settings.ACTION_SETTINGS))
+        } catch (e: Exception) {
+            // No settings screen available.
+        }
+        return false
     }
 
     private fun openUrl(url: String?): Boolean {

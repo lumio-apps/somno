@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 
 import '../core/sleep_logic.dart';
+import '../core/stats.dart';
 import '../core/version.dart';
 import '../data/models.dart';
 import '../data/native_bridge.dart';
@@ -33,6 +34,12 @@ class AppState extends ChangeNotifier {
   SomnoSettings settings = const SomnoSettings();
   List<SleepSession> sessions = const <SleepSession>[];
   bool loaded = false;
+
+  /// Sleeps that are not naps. Streak, debt and averages use these.
+  List<SleepSession> get nightSessions =>
+      sessions.where((s) => !isNap(s)).toList();
+
+  List<SleepSession> get napSessions => sessions.where(isNap).toList();
 
   /// Null while unknown. False means Android may stop the tracker.
   bool? batteryOk;
@@ -106,6 +113,9 @@ class AppState extends ChangeNotifier {
   }
 
   Future<bool> openUrl(String url) => _native.openUrl(url);
+
+  /// False when Digital Wellbeing was not found and Settings opened instead.
+  Future<bool> openWellbeing() => _native.openWellbeing();
 
   Future<void> onResume() async {
     if (!loaded || !settings.onboarded) {

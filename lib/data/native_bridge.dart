@@ -54,6 +54,17 @@ class NativeBridge {
     }
   }
 
+  /// Opens Digital Wellbeing. False when it is missing on this phone and the
+  /// normal Settings opened instead.
+  Future<bool> openWellbeing() async {
+    try {
+      final result = await _channel.invokeMethod<bool>('openWellbeing');
+      return result ?? false;
+    } on Exception {
+      return false;
+    }
+  }
+
   /// True when Android will not battery-restrict the app.
   Future<bool> isBatteryUnrestricted() async {
     try {

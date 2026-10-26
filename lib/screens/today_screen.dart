@@ -52,14 +52,20 @@ class TodayScreen extends StatelessWidget {
     final p = SomnoPalette.of(context);
     final settings = app.settings;
     final today = dateOnly(DateTime.now());
-    final day = latestSleepDay(app.sessions);
-    final daySessions = day == null
-        ? const <SleepSession>[]
-        : sessionsOnDay(app.sessions, day);
+    final night = app.nightSessions;
+    final byDay = minutesByDay(night);
+    final day = latestSleepDay(night);
+    final daySessions =
+        day == null ? const <SleepSession>[] : sessionsOnDay(night, day);
+    final naps = sessionsOnDay(app.napSessions, today);
+    final napMinutes = naps.fold<int>(0, (sum, s) => sum + s.minutes);
+    final streak = goalStreak(byDay, today, settings.goalMinutes);
+    final consistency = consistencyScore(night, today);
+    final debt = sleepDebt(byDay, today, settings.goalMinutes);
     final total = daySessions.fold<int>(0, (sum, s) => sum + s.minutes);
     final main = longestSession(daySessions);
     final goal = settings.goalMinutes;
-    final week = lastNDays(minutesByDay(app.sessions), today, 7);
+    final week = lastNDays(byDay, today, 7);
     final weekMax = week.fold<int>(0, (m, d) => d.minutes > m ? d.minutes : m);
     final scale = (weekMax > goal ? weekMax : goal).toDouble();
     final percent = goal == 0 ? 0 : (total * 100 / goal).round();
@@ -276,12 +282,144 @@ class TodayScreen extends StatelessWidget {
       ),
     );
 
+    if (naps.isNotEmpty) {
+      children.add(const SizedBox(height: 12));
+      children.add(
+        Panel(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                l.napsToday,
+                style: TextStyle(fontSize: 15, color: p.text),
+              ),
+              Text(
+                '${naps.length} · ${durationText(l, napMinutes)}',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: p.text,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final debtMinutes = debt?.minutes ?? 0;
+    final debtEven = debtMinutes.abs() < 15;
+    children.add(const SizedBox(height: 16));
+    children.add(
+      Panel(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l.insightsTitle,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: p.text,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: _Stat(
+                    label: l.streakLabel,
+                    value: l.daysCount(streak),
+                    valueColor: streak > 0 ? p.primary : p.text,
+                  ),
+                ),
+                Expanded(
+                  child: _Stat(
+                    label: l.consistencyLabel,
+                    value: consistency == null ? '–' : '$consistency%',
+                    caption: consistency == null ? l.needMoreDays : null,
+                  ),
+                ),
+                Expanded(
+                  child: _Stat(
+                    label: l.debtLabel,
+                    value: debt == null
+                        ? '–'
+                        : durationText(l, debtEven ? 0 : debtMinutes.abs()),
+                    caption: debt == null
+                        ? l.needMoreDays
+                        : debtEven
+                            ? l.debtEven
+                            : debtMinutes > 0
+                                ? l.debtShort
+                                : l.debtAhead,
+                    valueColor: debt == null || debtEven
+                        ? p.text
+                        : debtMinutes > 0
+                            ? p.accent
+                            : p.primary,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(
+              l.insightsNote,
+              style: TextStyle(fontSize: 12, height: 1.45, color: p.muted),
+            ),
+          ],
+        ),
+      ),
+    );
+
     return SafeArea(
       bottom: false,
       child: ListView(
         padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
         children: children,
       ),
+    );
+  }
+}
+
+class _Stat extends StatelessWidget {
+  const _Stat({
+    required this.label,
+    required this.value,
+    this.caption,
+    this.valueColor,
+  });
+
+  final String label;
+  final String value;
+  final String? caption;
+  final Color? valueColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = SomnoPalette.of(context);
+    final note = caption;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: TextStyle(fontSize: 12, color: p.muted)),
+        const SizedBox(height: 2),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            value,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: valueColor ?? p.text,
+            ),
+          ),
+        ),
+        if (note != null)
+          Text(note, style: TextStyle(fontSize: 12, color: p.muted)),
+      ],
     );
   }
 }

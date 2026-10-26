@@ -44,11 +44,12 @@ class _SomnoAppState extends State<SomnoApp> with WidgetsBindingObserver {
         builder: (context, _) {
           final settings = widget.state.settings;
           final code = settings.localeCode;
+          final accent = SomnoAccent.fromIndex(settings.accentIndex);
           return MaterialApp(
             title: 'Somno',
             debugShowCheckedModeBanner: false,
-            theme: buildTheme(Brightness.light),
-            darkTheme: buildTheme(Brightness.dark),
+            theme: buildTheme(Brightness.light, accent),
+            darkTheme: buildTheme(Brightness.dark, accent),
             themeMode: settings.themeMode,
             locale: code.isEmpty ? null : Locale(code),
             localizationsDelegates: AppLocalizations.localizationsDelegates,

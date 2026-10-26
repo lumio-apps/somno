@@ -48,6 +48,7 @@ class SomnoSettings {
     this.trackingEnabled = false,
     this.onboarded = false,
     this.autoUpdateCheck = true,
+    this.accentIndex = 0,
   });
 
   final TrackingMode mode;
@@ -69,6 +70,9 @@ class SomnoSettings {
   final bool onboarded;
   final bool autoUpdateCheck;
 
+  /// Index into the accent colours in palette.dart.
+  final int accentIndex;
+
   SomnoSettings copyWith({
     TrackingMode? mode,
     int? nightStart,
@@ -83,6 +87,7 @@ class SomnoSettings {
     bool? trackingEnabled,
     bool? onboarded,
     bool? autoUpdateCheck,
+    int? accentIndex,
   }) {
     return SomnoSettings(
       mode: mode ?? this.mode,
@@ -98,6 +103,7 @@ class SomnoSettings {
       trackingEnabled: trackingEnabled ?? this.trackingEnabled,
       onboarded: onboarded ?? this.onboarded,
       autoUpdateCheck: autoUpdateCheck ?? this.autoUpdateCheck,
+      accentIndex: accentIndex ?? this.accentIndex,
     );
   }
 }

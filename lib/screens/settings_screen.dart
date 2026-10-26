@@ -79,6 +79,28 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
+  String _accentName(AppLocalizations l, SomnoAccent a) {
+    switch (a) {
+      case SomnoAccent.teal:
+        return l.accentTeal;
+      case SomnoAccent.purple:
+        return l.accentPurple;
+      case SomnoAccent.amber:
+        return l.accentAmber;
+      case SomnoAccent.blue:
+        return l.accentBlue;
+    }
+  }
+
+  Future<void> _openWellbeing(BuildContext context, AppState app) async {
+    final l = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final found = await app.openWellbeing();
+    if (!found) {
+      messenger.showSnackBar(SnackBar(content: Text(l.wellbeingMissing)));
+    }
+  }
+
   String _windowText(BuildContext context, int start, int end) {
     return '${minuteOfDayText(context, start)} – ${minuteOfDayText(context, end)}';
   }
@@ -255,6 +277,22 @@ class SettingsScreen extends StatelessWidget {
                 app.updateSettings((cur) => cur.copyWith(themeMode: m)),
           ),
           const SizedBox(height: 14),
+          Text(l.accentColor, style: TextStyle(fontSize: 14, color: p.muted)),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              for (final a in SomnoAccent.values)
+                _AccentDot(
+                  accent: a,
+                  label: _accentName(l, a),
+                  selected: s.accentIndex == a.index,
+                  onTap: () => app.updateSettings(
+                    (cur) => cur.copyWith(accentIndex: a.index),
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 14),
           Text(l.language, style: TextStyle(fontSize: 14, color: p.muted)),
           const SizedBox(height: 8),
           Pills<String>(
@@ -283,6 +321,18 @@ class SettingsScreen extends StatelessWidget {
                 ),
               );
             },
+          ),
+          SettingRow(
+            label: l.wellbeing,
+            value: l.open,
+            onTap: () => _openWellbeing(context, app),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              l.wellbeingNote,
+              style: TextStyle(fontSize: 12, height: 1.5, color: p.muted),
+            ),
           ),
           SectionLabel(l.sectionUpdates),
           SettingRow(
@@ -334,6 +384,61 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _AccentDot extends StatelessWidget {
+  const _AccentDot({
+    required this.accent,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final SomnoAccent accent;
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = SomnoPalette.of(context);
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    final color = dark ? accent.dark : accent.light;
+    return Semantics(
+      label: label,
+      selected: selected,
+      button: true,
+      child: InkResponse(
+        onTap: onTap,
+        radius: 28,
+        child: Container(
+          width: 48,
+          height: 48,
+          margin: const EdgeInsets.only(right: 8),
+          alignment: Alignment.center,
+          child: Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: selected ? p.text : Colors.transparent,
+                width: 2,
+              ),
+            ),
+            child: selected
+                ? Icon(
+                    Icons.check_rounded,
+                    size: 20,
+                    color: dark ? SomnoPalette.dark.onPrimary : Colors.white,
+                  )
+                : null,
+          ),
+        ),
       ),
     );
   }

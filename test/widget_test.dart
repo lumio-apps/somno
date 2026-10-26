@@ -22,6 +22,7 @@ List<SleepSession> run(
 
 void main() {
   versionTests();
+  insightTests();
 
   group('sleep detection', () {
     test('a night gap becomes one session', () {
@@ -187,6 +188,67 @@ void versionTests() {
       expect(info.version, '1.0.1');
       expect(info.apkUrl, 'https://github.com/x/Somno-v1.0.1.apk');
       expect(info.notes, 'Fixes');
+    });
+  });
+}
+
+SleepSession night(int wakeDay, {int bedHour = 23, int wakeHour = 7}) {
+  return SleepSession(
+    startMs: at(wakeDay - 1, bedHour),
+    endMs: at(wakeDay, wakeHour),
+  );
+}
+
+void insightTests() {
+  final today = DateTime(2026, 10, 10);
+  group('insights', () {
+    test('nap range', () {
+      SleepSession of(int minutes) =>
+          SleepSession(startMs: 0, endMs: minutes * 60000);
+      expect(isNap(of(19)), isFalse);
+      expect(isNap(of(20)), isTrue);
+      expect(isNap(of(90)), isTrue);
+      expect(isNap(of(91)), isFalse);
+    });
+
+    test('streak counts back from today', () {
+      final byDay = minutesByDay([night(8), night(9), night(10)]);
+      expect(goalStreak(byDay, today, 480), 3);
+    });
+
+    test('streak starts yesterday when today is empty', () {
+      final byDay = minutesByDay([night(8), night(9)]);
+      expect(goalStreak(byDay, today, 480), 2);
+    });
+
+    test('streak breaks on a short night', () {
+      final byDay = minutesByDay([
+        night(7),
+        night(8, wakeHour: 3),
+        night(9),
+        night(10),
+      ]);
+      expect(goalStreak(byDay, today, 480), 2);
+    });
+
+    test('sleep debt', () {
+      final byDay = minutesByDay([night(9, wakeHour: 6), night(10, wakeHour: 6)]);
+      final debt = sleepDebt(byDay, today, 480);
+      expect(debt?.minutes, 120);
+      expect(debt?.days, 2);
+      expect(sleepDebt(minutesByDay([night(10)]), today, 480), isNull);
+    });
+
+    test('consistency', () {
+      final steady = [night(8), night(9), night(10)];
+      expect(consistencyScore(steady, today), 100);
+      expect(consistencyScore([night(9), night(10)], today), isNull);
+      final messy = [
+        night(8, bedHour: 21, wakeHour: 5),
+        night(9, bedHour: 23, wakeHour: 7),
+        night(10, wakeHour: 10),
+      ];
+      expect(consistencyScore(messy, today)!, lessThan(100));
     });
   });
 }

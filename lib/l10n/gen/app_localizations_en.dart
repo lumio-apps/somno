@@ -449,4 +449,75 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get updatesNet =>
       'Internet is used only to look for updates. Nothing else is sent.';
+
+  @override
+  String get insightsTitle => 'This week';
+
+  @override
+  String get streakLabel => 'Streak';
+
+  @override
+  String get consistencyLabel => 'Consistency';
+
+  @override
+  String get debtLabel => 'Sleep debt';
+
+  @override
+  String daysCount(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get debtShort => 'short';
+
+  @override
+  String get debtAhead => 'ahead';
+
+  @override
+  String get debtEven => 'on goal';
+
+  @override
+  String get needMoreDays => 'needs 3+ days';
+
+  @override
+  String get insightsNote =>
+      'A day counts for your streak at 90% of your goal. Consistency compares bed and wake times over 7 days. Naps (20 min to 1.5 h) are kept apart.';
+
+  @override
+  String get napsToday => 'Naps today';
+
+  @override
+  String get napTag => 'Nap';
+
+  @override
+  String get accentColor => 'Accent colour';
+
+  @override
+  String get accentTeal => 'Teal';
+
+  @override
+  String get accentPurple => 'Purple';
+
+  @override
+  String get accentAmber => 'Amber';
+
+  @override
+  String get accentBlue => 'Blue';
+
+  @override
+  String get wellbeing => 'Digital Wellbeing';
+
+  @override
+  String get wellbeingNote =>
+      'See your screen time in Android\'s own page. It stays on Android; Somno does not read it.';
+
+  @override
+  String get wellbeingMissing =>
+      'Digital Wellbeing is not on this phone. Settings opened instead.';
 }

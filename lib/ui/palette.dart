@@ -1,5 +1,25 @@
 import 'package:flutter/material.dart';
 
+/// The main colour of the app. The first one is the original teal.
+enum SomnoAccent {
+  teal(Color(0xFF2DD4BF), Color(0xFF087F72)),
+  purple(Color(0xFFA78BFA), Color(0xFF6D45D9)),
+  amber(Color(0xFFFBBF24), Color(0xFF9A5B00)),
+  blue(Color(0xFF60A5FA), Color(0xFF1D5FD1));
+
+  const SomnoAccent(this.dark, this.light);
+
+  final Color dark;
+  final Color light;
+
+  static SomnoAccent fromIndex(int index) {
+    if (index < 0 || index >= SomnoAccent.values.length) {
+      return SomnoAccent.teal;
+    }
+    return SomnoAccent.values[index];
+  }
+}
+
 /// Colors of design B. Dark is true black for OLED screens.
 class SomnoPalette {
   const SomnoPalette({
@@ -52,14 +72,42 @@ class SomnoPalette {
     bar: Color(0xFFC5CFDC),
   );
 
+  SomnoPalette withPrimary(Color primary, Color onPrimary) {
+    return SomnoPalette(
+      bg: bg,
+      panel: panel,
+      line: line,
+      primary: primary,
+      onPrimary: onPrimary,
+      accent: accent,
+      text: text,
+      muted: muted,
+      alert: alert,
+      bar: bar,
+    );
+  }
+
+  /// The base colours with the main colour the user picked.
   static SomnoPalette of(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark ? dark : light;
+    final theme = Theme.of(context);
+    final base = theme.brightness == Brightness.dark ? dark : light;
+    return base.withPrimary(
+      theme.colorScheme.primary,
+      theme.colorScheme.onPrimary,
+    );
   }
 }
 
-ThemeData buildTheme(Brightness brightness) {
-  final p =
+ThemeData buildTheme(
+  Brightness brightness, [
+  SomnoAccent accent = SomnoAccent.teal,
+]) {
+  final base =
       brightness == Brightness.dark ? SomnoPalette.dark : SomnoPalette.light;
+  final p = base.withPrimary(
+    brightness == Brightness.dark ? accent.dark : accent.light,
+    base.onPrimary,
+  );
   return ThemeData(
     useMaterial3: true,
     brightness: brightness,

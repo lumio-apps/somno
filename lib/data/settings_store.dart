@@ -30,6 +30,7 @@ class SettingsStore {
       trackingEnabled: p.getBool('tracking_enabled') ?? d.trackingEnabled,
       onboarded: p.getBool('onboarded') ?? d.onboarded,
       autoUpdateCheck: p.getBool('auto_update_check') ?? d.autoUpdateCheck,
+      accentIndex: (p.getInt('accent') ?? d.accentIndex).clamp(0, 3).toInt(),
     );
   }
 
@@ -51,6 +52,7 @@ class SettingsStore {
     await p.setBool('tracking_enabled', s.trackingEnabled);
     await p.setBool('onboarded', s.onboarded);
     await p.setBool('auto_update_check', s.autoUpdateCheck);
+    await p.setInt('accent', s.accentIndex);
   }
 
   Future<int?> loadLastUpdateCheck() async {

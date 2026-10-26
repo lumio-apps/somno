@@ -43,7 +43,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     final goal = app.settings.goalMinutes;
     final today = dateOnly(DateTime.now());
     final count = _week ? 7 : 30;
-    final totals = lastNDays(minutesByDay(app.sessions), today, count);
+    final totals = lastNDays(minutesByDay(app.nightSessions), today, count);
     final avg = averageMinutes(totals);
     final maxTotal = totals.fold<int>(0, (m, d) => d.minutes > m ? d.minutes : m);
     final scale = (maxTotal > goal ? maxTotal : goal).toDouble() * 1.1;
@@ -319,12 +319,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             ),
                           ),
                           Text(
-                            _sourceText(l, s.source),
+                            isNap(s)
+                                ? '${l.napTag} · ${_sourceText(l, s.source)}'
+                                : _sourceText(l, s.source),
                             style: TextStyle(
                               fontSize: 12,
-                              color: s.source == kSourceAuto
-                                  ? p.muted
-                                  : p.accent,
+                              color: isNap(s) || s.source != kSourceAuto
+                                  ? p.accent
+                                  : p.muted,
                             ),
                           ),
                         ],

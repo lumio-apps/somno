@@ -883,6 +883,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Internet is used only to look for updates. Nothing else is sent.'**
   String get updatesNet;
+
+  /// No description provided for @insightsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get insightsTitle;
+
+  /// No description provided for @streakLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak'**
+  String get streakLabel;
+
+  /// No description provided for @consistencyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency'**
+  String get consistencyLabel;
+
+  /// No description provided for @debtLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep debt'**
+  String get debtLabel;
+
+  /// No description provided for @daysCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{1 day} other{{days} days}}'**
+  String daysCount(int days);
+
+  /// No description provided for @debtShort.
+  ///
+  /// In en, this message translates to:
+  /// **'short'**
+  String get debtShort;
+
+  /// No description provided for @debtAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'ahead'**
+  String get debtAhead;
+
+  /// No description provided for @debtEven.
+  ///
+  /// In en, this message translates to:
+  /// **'on goal'**
+  String get debtEven;
+
+  /// No description provided for @needMoreDays.
+  ///
+  /// In en, this message translates to:
+  /// **'needs 3+ days'**
+  String get needMoreDays;
+
+  /// No description provided for @insightsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'A day counts for your streak at 90% of your goal. Consistency compares bed and wake times over 7 days. Naps (20 min to 1.5 h) are kept apart.'**
+  String get insightsNote;
+
+  /// No description provided for @napsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Naps today'**
+  String get napsToday;
+
+  /// No description provided for @napTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Nap'**
+  String get napTag;
+
+  /// No description provided for @accentColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Accent colour'**
+  String get accentColor;
+
+  /// No description provided for @accentTeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Teal'**
+  String get accentTeal;
+
+  /// No description provided for @accentPurple.
+  ///
+  /// In en, this message translates to:
+  /// **'Purple'**
+  String get accentPurple;
+
+  /// No description provided for @accentAmber.
+  ///
+  /// In en, this message translates to:
+  /// **'Amber'**
+  String get accentAmber;
+
+  /// No description provided for @accentBlue.
+  ///
+  /// In en, this message translates to:
+  /// **'Blue'**
+  String get accentBlue;
+
+  /// No description provided for @wellbeing.
+  ///
+  /// In en, this message translates to:
+  /// **'Digital Wellbeing'**
+  String get wellbeing;
+
+  /// No description provided for @wellbeingNote.
+  ///
+  /// In en, this message translates to:
+  /// **'See your screen time in Android\'s own page. It stays on Android; Somno does not read it.'**
+  String get wellbeingNote;
+
+  /// No description provided for @wellbeingMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Digital Wellbeing is not on this phone. Settings opened instead.'**
+  String get wellbeingMissing;
 }
 
 class _AppLocalizationsDelegate
