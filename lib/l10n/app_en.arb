@@ -1,0 +1,243 @@
+{
+  "@@locale": "en",
+  "appName": "Somno",
+  "navToday": "Today",
+  "navHistory": "History",
+  "navSettings": "Settings",
+  "statusNight": "Night tracking on",
+  "statusDay": "Day tracking on",
+  "statusAny": "Tracking any time",
+  "statusOff": "Tracking is off",
+  "titleNone": "Sleep",
+  "titleToday": "Sleep today",
+  "titleYesterday": "Sleep yesterday",
+  "titleOnDate": "Sleep on {date}",
+  "@titleOnDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "noSleepYet": "No sleep detected yet",
+  "noSleepHint": "Leave your phone locked for {hours} hours or more and Somno will count it as sleep.",
+  "@noSleepHint": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "goalPercent": "{percent}% of {goal} goal",
+  "@goalPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "goalToGo": "{duration} to go",
+  "@goalToGo": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "goalReached": "Goal reached",
+  "asleepLabel": "Asleep",
+  "awakeLabel": "Awake",
+  "last7": "Last 7 days",
+  "avgShort": "Avg {duration}",
+  "@avgShort": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "avgPerNight": "Average per night",
+  "noData": "No data yet",
+  "periodWeek": "Week",
+  "periodMonth": "Month",
+  "goalLegend": "{goal} goal",
+  "@goalLegend": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionsTitle": "Sleep sessions",
+  "addMissingSleep": "+ Add missing sleep",
+  "noSessions": "No sleep sessions in this period",
+  "sourceAuto": "Detected automatically",
+  "sourceEdited": "Edited by you",
+  "sourceManual": "Added by you",
+  "editSleep": "Edit sleep",
+  "addSleep": "Add sleep",
+  "totalSleep": "Total sleep",
+  "fellAsleep": "Fell asleep",
+  "wokeUp": "Woke up",
+  "save": "Save",
+  "deleteSession": "Delete this session",
+  "deleteConfirmTitle": "Delete this session?",
+  "deleteConfirmBody": "This cannot be undone.",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "editNote": "Changed times are marked as edited, so you can tell them apart from automatic ones.",
+  "errEndBeforeStart": "Wake time must be after the sleep time.",
+  "errTooLong": "A session can be at most 24 hours.",
+  "errOverlap": "This overlaps another sleep session.",
+  "errFuture": "Times cannot be in the future.",
+  "settingsTitle": "Settings",
+  "sectionTracking": "Tracking",
+  "trackSleep": "Track my sleep",
+  "countSleepDuring": "Count sleep during",
+  "modeNight": "Night",
+  "modeDay": "Day",
+  "modeAny": "Any time",
+  "windowNight": "Night window",
+  "windowDay": "Day window",
+  "anyTimeNote": "Tracks around the clock. Use a longer minimum gap so idle time is not counted as sleep.",
+  "minGap": "Minimum gap",
+  "gapValue": "{hours} h",
+  "@gapValue": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "gapTip": "Tip: in Any time mode, a gap of 4 h or more works best.",
+  "pickStart": "Tracking starts at",
+  "pickEnd": "Tracking stops at",
+  "sectionGoal": "Goal",
+  "dailyGoal": "Daily sleep goal",
+  "birthYear": "Birth year",
+  "recommendedFor": "Recommended for your age: {range}",
+  "@recommendedFor": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "guideline": "This is a general guideline, not medical advice.",
+  "sectionApp": "App",
+  "theme": "Theme",
+  "themeDark": "Dark",
+  "themeLight": "Light",
+  "themeSystem": "System",
+  "language": "Language",
+  "langSystem": "System",
+  "langEnglish": "English",
+  "langHindi": "हिन्दी",
+  "batteryGuide": "Battery setup guide",
+  "open": "Open",
+  "privacyNote": "All data stays on this phone. No account, no ads, no internet.",
+  "decrease": "Decrease",
+  "increase": "Increase",
+  "welcomeTitle": "Welcome to Somno",
+  "welcomeBody": "Somno notices long gaps when your phone stays locked and counts them as sleep. Everything stays on this phone.",
+  "birthYearLabel": "Your birth year",
+  "birthYearError": "Enter a valid birth year",
+  "recommendedAge": "Recommended for your age",
+  "yourGoal": "Your daily sleep goal",
+  "changeLater": "You can change the goal any time in Settings.",
+  "youngNote": "Phone-based tracking may not suit young children.",
+  "continueLabel": "Continue",
+  "modeStepTitle": "When do you sleep?",
+  "modeStepBody": "Pick when Somno should look for sleep. You can change this any time.",
+  "modeNightDesc": "Long sleep at night, starting between {start} and {end}",
+  "@modeNightDesc": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "modeDayDesc": "Sleep in the day, starting between {start} and {end}",
+  "@modeDayDesc": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "modeAnyDesc": "Count any long gap, day or night",
+  "batteryTitle": "Let Somno rest in the background",
+  "batteryBody": "Some phones stop apps to save battery. Without this one-time step, Somno can miss when your screen turns off.",
+  "batteryStep1": "Tap the button below to open battery settings",
+  "batteryStep2": "Find Somno in the list (choose All apps if needed)",
+  "batteryStep3": "Set it to Unrestricted or Do not optimize",
+  "batteryFoot": "Somno only listens for screen on and off. It uses very little battery and never connects to the internet.",
+  "openBatterySettings": "Open battery settings",
+  "batteryAlreadyOk": "Battery saving is already off for Somno.",
+  "startTracking": "Start tracking",
+  "skipForNow": "Skip for now",
+  "done": "Done",
+  "notifHint": "Allow notifications so Android keeps Somno running. The notification only says that tracking is on.",
+  "bannerTrackingOff": "Tracking is off.",
+  "turnOn": "Turn on",
+  "bannerBattery": "Battery saving may stop tracking.",
+  "fix": "Fix",
+  "durationHM": "{h}h {m}m",
+  "@durationHM": {
+    "placeholders": {
+      "h": {
+        "type": "int"
+      },
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "durationH": "{h}h",
+  "@durationH": {
+    "placeholders": {
+      "h": {
+        "type": "int"
+      }
+    }
+  },
+  "durationM": "{m}m",
+  "@durationM": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "hoursRange": "{min}–{max} h",
+  "@hoursRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "stepOf": "Step {step} of {total}",
+  "@stepOf": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  }
+}

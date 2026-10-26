@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Somno</string>
+    <string name="channel_name">Sleep tracking</string>
+    <string name="notif_title">Somno is tracking sleep</string>
+    <string name="notif_text">Only screen on and off. Nothing leaves your phone.</string>
+</resources>

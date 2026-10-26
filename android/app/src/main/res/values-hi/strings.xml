@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Somno</string>
+    <string name="channel_name">नींद ट्रैकिंग</string>
+    <string name="notif_title">Somno नींद ट्रैक कर रहा है</string>
+    <string name="notif_text">सिर्फ़ स्क्रीन ऑन और ऑफ़। कुछ भी फ़ोन से बाहर नहीं जाता।</string>
+</resources>
