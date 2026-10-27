@@ -8,6 +8,7 @@ import '../ui/format.dart';
 import '../ui/palette.dart';
 import '../ui/widgets.dart';
 import 'battery_guide.dart';
+import 'status_screen.dart';
 import 'update_dialog.dart';
 
 class TodayScreen extends StatelessWidget {
@@ -110,6 +111,21 @@ class TodayScreen extends StatelessWidget {
           text: l.updateBanner(update.version),
           action: l.view,
           onTap: () => showUpdateDialog(context, app, update),
+        ),
+      );
+      children.add(const SizedBox(height: 12));
+    }
+
+    if (settings.trackingEnabled && app.usageAccess == false) {
+      children.add(
+        InfoBanner(
+          text: l.usageBanner,
+          action: l.fix,
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute<void>(builder: (_) => const StatusScreen()),
+            );
+          },
         ),
       );
       children.add(const SizedBox(height: 12));

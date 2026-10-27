@@ -548,4 +548,68 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get updateDownloadFailed =>
       'डाउनलोड नहीं हो सका। इंटरनेट देखें और फिर कोशिश करें।';
+
+  @override
+  String get trackingStatus => 'ट्रैकिंग की स्थिति';
+
+  @override
+  String get statusUsage => 'यूसेज एक्सेस';
+
+  @override
+  String get accessOn => 'चालू';
+
+  @override
+  String get accessOff => 'बंद';
+
+  @override
+  String get statusService => 'बैकग्राउंड ट्रैकर';
+
+  @override
+  String get statusRunning => 'चल रहा है';
+
+  @override
+  String get statusStopped => 'बंद है';
+
+  @override
+  String get statusBattery => 'बैटरी पाबंदी';
+
+  @override
+  String get statusBatteryOk => 'कोई पाबंदी नहीं';
+
+  @override
+  String get statusBatteryBad => 'पाबंदी है';
+
+  @override
+  String get statusLastOff => 'आख़िरी स्क्रीन-ऑफ़';
+
+  @override
+  String get statusLastUnlock => 'आख़िरी अनलॉक';
+
+  @override
+  String get statusNever => 'कभी नहीं';
+
+  @override
+  String get statusPhone => 'फ़ोन';
+
+  @override
+  String get usageExplain =>
+      'सुझाया गया। Xiaomi, Oppo और Vivo जैसे कुछ फ़ोन रात में बैकग्राउंड ऐप बंद कर देते हैं। यूसेज एक्सेस मिलने पर Somno स्क्रीन कब बंद हुई और कब अनलॉक हुआ, यह Android से ही पढ़ लेता है, इसलिए नींद फिर भी मिल जाती है। सिर्फ़ ये स्क्रीन के समय पढ़े जाते हैं, आप कौन से ऐप चलाते हैं यह नहीं। कुछ भी फ़ोन से बाहर नहीं जाता।';
+
+  @override
+  String get usageIsOn =>
+      'यूसेज एक्सेस चालू है। नींद Android की अपनी स्क्रीन हिस्ट्री से पढ़ी जाती है।';
+
+  @override
+  String get allowUsage => 'यूसेज एक्सेस दें';
+
+  @override
+  String get usageBanner =>
+      'यूसेज एक्सेस दें ताकि Android रात में Somno को बंद कर दे तब भी नींद मिल जाए।';
+
+  @override
+  String get autostartNote =>
+      'Xiaomi, Oppo, Vivo, Huawei और Honor: Somno के लिए Autostart और बैकग्राउंड एक्टिविटी भी चालू करें।';
+
+  @override
+  String get openAutostart => 'ऑटोस्टार्ट सेटिंग खोलें';
 }

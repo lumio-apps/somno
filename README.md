@@ -112,6 +112,7 @@ Somno is built to be checkable, not just promised.
 | Permission | Why it is needed |
 | --- | --- |
 | `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_SPECIAL_USE` | Keep the screen-event listener running |
+| `PACKAGE_USAGE_STATS` (optional, you grant it) | Read screen-off and unlock times from Android's own history, so sleep is found even if the phone stops the tracker at night. Only these two kinds of event are read, never which apps you use |
 | `RECEIVE_BOOT_COMPLETED` | Start tracking again after the phone restarts |
 | `POST_NOTIFICATIONS` | The tracking notice and the optional bedtime reminder |
 | `INTERNET` | Look for and download new versions from GitHub |
@@ -137,6 +138,7 @@ cannot tell light sleep from deep sleep and it does not diagnose anything.
 
 ## Good to know
 
+- On phones that stop background apps at night (Xiaomi, Oppo, Vivo, Huawei, Honor), turn on **Usage access** in **Settings > Tracking status**. Somno then reads your screen history from Android itself instead of relying on the background tracker.
 - Android may stop background apps to save battery. Use the in-app **Battery setup guide** and
   set Somno to *Unrestricted* or *Don't optimise*. Some brands (Xiaomi, Oppo, Vivo, Huawei)
   are stricter than others and may need an extra "autostart" switch.

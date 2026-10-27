@@ -70,6 +70,16 @@ class SettingsStore {
     await p.setInt('last_update_check_ms', value);
   }
 
+  Future<int?> loadLastUsageQuery() async {
+    final p = await SharedPreferences.getInstance();
+    return p.getInt('usage_query_ms');
+  }
+
+  Future<void> saveLastUsageQuery(int value) async {
+    final p = await SharedPreferences.getInstance();
+    await p.setInt('usage_query_ms', value);
+  }
+
   Future<int?> loadLastOff() async {
     final p = await SharedPreferences.getInstance();
     return p.getInt(_lastOffKey);

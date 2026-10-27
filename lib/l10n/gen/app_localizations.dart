@@ -1063,6 +1063,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Download failed. Check your internet and try again.'**
   String get updateDownloadFailed;
+
+  /// No description provided for @trackingStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking status'**
+  String get trackingStatus;
+
+  /// No description provided for @statusUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage access'**
+  String get statusUsage;
+
+  /// No description provided for @accessOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get accessOn;
+
+  /// No description provided for @accessOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get accessOff;
+
+  /// No description provided for @statusService.
+  ///
+  /// In en, this message translates to:
+  /// **'Background tracker'**
+  String get statusService;
+
+  /// No description provided for @statusRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Running'**
+  String get statusRunning;
+
+  /// No description provided for @statusStopped.
+  ///
+  /// In en, this message translates to:
+  /// **'Stopped'**
+  String get statusStopped;
+
+  /// No description provided for @statusBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery restriction'**
+  String get statusBattery;
+
+  /// No description provided for @statusBatteryOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Unrestricted'**
+  String get statusBatteryOk;
+
+  /// No description provided for @statusBatteryBad.
+  ///
+  /// In en, this message translates to:
+  /// **'Restricted'**
+  String get statusBatteryBad;
+
+  /// No description provided for @statusLastOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Last screen-off seen'**
+  String get statusLastOff;
+
+  /// No description provided for @statusLastUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Last unlock seen'**
+  String get statusLastUnlock;
+
+  /// No description provided for @statusNever.
+  ///
+  /// In en, this message translates to:
+  /// **'never'**
+  String get statusNever;
+
+  /// No description provided for @statusPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get statusPhone;
+
+  /// No description provided for @usageExplain.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended. Some phones, such as Xiaomi, Oppo and Vivo, stop background apps at night. With Usage access, Somno reads when your screen turned off and when you unlocked from Android itself, so your sleep is still found. Only these screen times are read, never which apps you use. Nothing leaves your phone.'**
+  String get usageExplain;
+
+  /// No description provided for @usageIsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage access is on. Sleep is read from Android\'s own screen history.'**
+  String get usageIsOn;
+
+  /// No description provided for @allowUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow usage access'**
+  String get allowUsage;
+
+  /// No description provided for @usageBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Usage access so Somno can find your sleep even if Android stops it at night.'**
+  String get usageBanner;
+
+  /// No description provided for @autostartNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Xiaomi, Oppo, Vivo, Huawei and Honor: also allow Autostart and background activity for Somno.'**
+  String get autostartNote;
+
+  /// No description provided for @openAutostart.
+  ///
+  /// In en, this message translates to:
+  /// **'Open autostart settings'**
+  String get openAutostart;
 }
 
 class _AppLocalizationsDelegate

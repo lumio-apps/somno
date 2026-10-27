@@ -29,7 +29,26 @@ object EventStore {
         while (queue.length() > MAX_EVENTS) {
             queue.remove(0)
         }
-        p.edit().putString(KEY_QUEUE, queue.toString()).commit()
+        val now = System.currentTimeMillis()
+        val lastKey = when (type) {
+            "off" -> "last_off"
+            "unlock" -> "last_unlock"
+            else -> "last_start"
+        }
+        p.edit()
+            .putString(KEY_QUEUE, queue.toString())
+            .putLong(lastKey, now)
+            .commit()
+    }
+
+    /** Last time the service saw a screen-off, an unlock and a start. */
+    fun lastTimes(context: Context): LongArray {
+        val p = prefs(context)
+        return longArrayOf(
+            p.getLong("last_off", 0L),
+            p.getLong("last_unlock", 0L),
+            p.getLong("last_start", 0L)
+        )
     }
 
     @Synchronized

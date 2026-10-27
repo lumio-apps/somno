@@ -554,4 +554,68 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get updateDownloadFailed =>
       'Download failed. Check your internet and try again.';
+
+  @override
+  String get trackingStatus => 'Tracking status';
+
+  @override
+  String get statusUsage => 'Usage access';
+
+  @override
+  String get accessOn => 'On';
+
+  @override
+  String get accessOff => 'Off';
+
+  @override
+  String get statusService => 'Background tracker';
+
+  @override
+  String get statusRunning => 'Running';
+
+  @override
+  String get statusStopped => 'Stopped';
+
+  @override
+  String get statusBattery => 'Battery restriction';
+
+  @override
+  String get statusBatteryOk => 'Unrestricted';
+
+  @override
+  String get statusBatteryBad => 'Restricted';
+
+  @override
+  String get statusLastOff => 'Last screen-off seen';
+
+  @override
+  String get statusLastUnlock => 'Last unlock seen';
+
+  @override
+  String get statusNever => 'never';
+
+  @override
+  String get statusPhone => 'Phone';
+
+  @override
+  String get usageExplain =>
+      'Recommended. Some phones, such as Xiaomi, Oppo and Vivo, stop background apps at night. With Usage access, Somno reads when your screen turned off and when you unlocked from Android itself, so your sleep is still found. Only these screen times are read, never which apps you use. Nothing leaves your phone.';
+
+  @override
+  String get usageIsOn =>
+      'Usage access is on. Sleep is read from Android\'s own screen history.';
+
+  @override
+  String get allowUsage => 'Allow usage access';
+
+  @override
+  String get usageBanner =>
+      'Allow Usage access so Somno can find your sleep even if Android stops it at night.';
+
+  @override
+  String get autostartNote =>
+      'Xiaomi, Oppo, Vivo, Huawei and Honor: also allow Autostart and background activity for Somno.';
+
+  @override
+  String get openAutostart => 'Open autostart settings';
 }

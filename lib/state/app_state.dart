@@ -51,6 +51,9 @@ class AppState extends ChangeNotifier {
 
   bool _syncing = false;
 
+  /// True when Usage access is allowed. Null while unknown.
+  bool? usageAccess;
+
   /// Installed version name, for example "1.0.0".
   String appVersion = '';
 
@@ -182,6 +185,17 @@ class AppState extends ChangeNotifier {
     await refreshBattery();
   }
 
+  /// Re-reads Usage access and battery settings, for example after the user
+  /// comes back from the system settings.
+  Future<void> refreshAccess() async {
+    final usage = await _native.hasUsageAccess();
+    if (usage != usageAccess) {
+      usageAccess = usage;
+      notifyListeners();
+    }
+    await refreshBattery();
+  }
+
   Future<void> refreshBattery() async {
     final ok = await _native.isBatteryUnrestricted();
     if (ok != batteryOk) {
@@ -198,10 +212,33 @@ class AppState extends ChangeNotifier {
     }
     _syncing = true;
     try {
-      final events = NativeEvent.parse(await _native.drainEvents());
+      var events = NativeEvent.parse(await _native.drainEvents());
+      final now = DateTime.now().millisecondsSinceEpoch;
+      final hasUsage = await _native.hasUsageAccess();
+      if (hasUsage != usageAccess) {
+        usageAccess = hasUsage;
+        notifyListeners();
+      }
       if (!settings.trackingEnabled) {
         await _store.saveLastOff(null);
+        await _store.saveLastUsageQuery(now);
         return;
+      }
+      if (hasUsage) {
+        // Android's own screen history does not depend on the tracker
+        // surviving the night, so it is preferred when it has events.
+        const day = 24 * 3600000;
+        final saved = await _store.loadLastUsageQuery();
+        var from = saved == null ? now - day : saved - 5000;
+        if (from < now - 7 * day) {
+          from = now - 7 * day;
+        }
+        final history =
+            NativeEvent.parse(await _native.screenHistory(from, now));
+        await _store.saveLastUsageQuery(now);
+        if (history.isNotEmpty) {
+          events = history;
+        }
       }
       if (events.isNotEmpty) {
         final result = detectSessions(
@@ -265,6 +302,7 @@ class AppState extends ChangeNotifier {
   Future<void> setTracking(bool on) async {
     await updateSettings((s) => s.copyWith(trackingEnabled: on));
     await _store.saveLastOff(null);
+    await _store.saveLastUsageQuery(DateTime.now().millisecondsSinceEpoch);
     if (on) {
       await _native.startTracking();
     } else {
@@ -293,6 +331,12 @@ class AppState extends ChangeNotifier {
   Future<void> requestNotifications() => _native.requestNotifications();
 
   Future<void> openBatterySettings() => _native.openBatterySettings();
+
+  Future<void> openUsageAccess() => _native.openUsageAccess();
+
+  Future<bool> openAutostart() => _native.openAutostart();
+
+  Future<Map<String, Object?>> trackingStatus() => _native.trackingStatus();
 
   Future<SaveResult> saveSession({
     SleepSession? existing,

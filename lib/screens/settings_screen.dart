@@ -9,6 +9,7 @@ import '../ui/format.dart';
 import '../ui/palette.dart';
 import '../ui/widgets.dart';
 import 'battery_guide.dart';
+import 'status_screen.dart';
 import 'update_dialog.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -379,6 +380,15 @@ class SettingsScreen extends StatelessWidget {
                 MaterialPageRoute<void>(
                   builder: (_) => const BatteryGuideScreen(),
                 ),
+              );
+            },
+          ),
+          SettingRow(
+            label: l.trackingStatus,
+            value: l.open,
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(builder: (_) => const StatusScreen()),
               );
             },
           ),

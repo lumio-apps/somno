@@ -73,6 +73,53 @@ class NativeBridge {
     }
   }
 
+  /// True when the user allowed Usage access, so Android's own screen
+  /// history can be read.
+  Future<bool> hasUsageAccess() async {
+    try {
+      final result = await _channel.invokeMethod<bool>('hasUsageAccess');
+      return result ?? false;
+    } on Exception {
+      return false;
+    }
+  }
+
+  Future<void> openUsageAccess() => _call('openUsageAccess');
+
+  Future<bool> openAutostart() async {
+    try {
+      final result = await _channel.invokeMethod<bool>('openAutostart');
+      return result ?? false;
+    } on Exception {
+      return false;
+    }
+  }
+
+  /// Screen events from Android's own history between two times, in the same
+  /// JSON form as [drainEvents].
+  Future<String> screenHistory(int fromMs, int toMs) async {
+    try {
+      final result = await _channel.invokeMethod<String>(
+        'screenHistory',
+        <String, int>{'from': fromMs, 'to': toMs},
+      );
+      return result ?? '[]';
+    } on Exception {
+      return '[]';
+    }
+  }
+
+  /// Facts about the tracker for the status screen.
+  Future<Map<String, Object?>> trackingStatus() async {
+    try {
+      final result =
+          await _channel.invokeMapMethod<String, Object?>('trackingStatus');
+      return result ?? <String, Object?>{};
+    } on Exception {
+      return <String, Object?>{};
+    }
+  }
+
   /// The installed version name, for example "1.0.1". Empty when unknown.
   Future<String> appVersion() async {
     try {

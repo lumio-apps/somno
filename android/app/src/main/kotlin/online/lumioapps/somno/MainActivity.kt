@@ -61,6 +61,18 @@ class MainActivity : FlutterActivity() {
                     result.success(dir.absolutePath)
                 }
                 "installApk" -> result.success(installApk(call.argument<String>("path")))
+                "hasUsageAccess" -> result.success(ScreenHistory.hasAccess(this))
+                "openUsageAccess" -> {
+                    openUsageAccess()
+                    result.success(null)
+                }
+                "screenHistory" -> {
+                    val from = call.argument<Number>("from")?.toLong() ?: 0L
+                    val to = call.argument<Number>("to")?.toLong() ?: 0L
+                    result.success(ScreenHistory.read(this, from, to))
+                }
+                "trackingStatus" -> result.success(trackingStatus())
+                "openAutostart" -> result.success(openAutostart())
                 "appVersion" -> result.success(appVersion())
                 "openWellbeing" -> result.success(openWellbeing())
                 "openUrl" -> {
@@ -98,6 +110,69 @@ class MainActivity : FlutterActivity() {
                 // No settings screen available.
             }
         }
+    }
+
+    private fun openUsageAccess() {
+        try {
+            startActivity(
+                Intent(
+                    Settings.ACTION_USAGE_ACCESS_SETTINGS,
+                    Uri.parse("package:$packageName")
+                )
+            )
+        } catch (e: Exception) {
+            try {
+                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+            } catch (e2: Exception) {
+                // No such screen on this phone.
+            }
+        }
+    }
+
+    private fun trackingStatus(): HashMap<String, Any> {
+        val times = EventStore.lastTimes(this)
+        val map = HashMap<String, Any>()
+        map["running"] = SleepService.running
+        map["manufacturer"] = Build.MANUFACTURER ?: ""
+        map["model"] = Build.MODEL ?: ""
+        map["sdk"] = Build.VERSION.SDK_INT
+        map["lastOff"] = times[0]
+        map["lastUnlock"] = times[1]
+        map["lastStart"] = times[2]
+        return map
+    }
+
+    /** Opens the autostart screen of Xiaomi, Oppo, Vivo or Huawei phones. */
+    private fun openAutostart(): Boolean {
+        val screens = listOf(
+            "com.miui.securitycenter" to
+                "com.miui.permcenter.autostart.AutoStartManagementActivity",
+            "com.coloros.safecenter" to
+                "com.coloros.safecenter.permission.startup.StartupAppListActivity",
+            "com.vivo.permissionmanager" to
+                "com.vivo.permissionmanager.activity.BgStartUpManagerActivity",
+            "com.huawei.systemmanager" to
+                "com.huawei.systemmanager.startupmgr.ui.StartupNormalAppListActivity"
+        )
+        for ((pkg, cls) in screens) {
+            try {
+                startActivity(Intent().setClassName(pkg, cls))
+                return true
+            } catch (e: Exception) {
+                // Not this brand, try the next one.
+            }
+        }
+        try {
+            startActivity(
+                Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.parse("package:$packageName")
+                )
+            )
+        } catch (e: Exception) {
+            // No settings screen available.
+        }
+        return false
     }
 
     private fun appVersion(): String {
