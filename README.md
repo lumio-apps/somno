@@ -138,6 +138,7 @@ cannot tell light sleep from deep sleep and it does not diagnose anything.
 
 ## Good to know
 
+- With **Usage access** on, Somno runs **no background service at all** and shows no tracking notification: it reads your screen history from Android when you open the app. Open the app every few days, because Android keeps that history only for a short time. Without Usage access, the background tracker runs only inside your sleep window and stops after you wake up.
 - On phones that stop background apps at night (Xiaomi, Oppo, Vivo, Huawei, Honor), turn on **Usage access** in **Settings > Tracking status**. Somno then reads your screen history from Android itself instead of relying on the background tracker.
 - Android may stop background apps to save battery. Use the in-app **Battery setup guide** and
   set Somno to *Unrestricted* or *Don't optimise*. Some brands (Xiaomi, Oppo, Vivo, Huawei)

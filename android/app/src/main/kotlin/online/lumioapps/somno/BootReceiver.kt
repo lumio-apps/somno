@@ -14,6 +14,7 @@ class BootReceiver : BroadcastReceiver() {
         }
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             EventStore.add(context, "boot")
+            EventStore.setPendingOff(context, false)
         }
         Tracking.start(context)
     }

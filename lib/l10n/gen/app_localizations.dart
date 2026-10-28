@@ -1157,7 +1157,7 @@ abstract class AppLocalizations {
   /// No description provided for @usageIsOn.
   ///
   /// In en, this message translates to:
-  /// **'Usage access is on. Sleep is read from Android\'s own screen history.'**
+  /// **'Usage access is on. Sleep is read from Android\'s own screen history, and no background service runs.'**
   String get usageIsOn;
 
   /// No description provided for @allowUsage.
@@ -1183,6 +1183,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open autostart settings'**
   String get openAutostart;
+
+  /// No description provided for @statusNotNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Not needed'**
+  String get statusNotNeeded;
+
+  /// No description provided for @fallbackNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Without Usage access, the background tracker runs only inside your sleep window, and only if Somno was opened during it. Allowing Usage access is more reliable.'**
+  String get fallbackNote;
 }
 
 class _AppLocalizationsDelegate

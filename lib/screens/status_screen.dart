@@ -131,8 +131,12 @@ class _StatusScreenState extends State<StatusScreen>
                   ),
                   row(
                     l.statusService,
-                    running ? l.statusRunning : l.statusStopped,
-                    color: running ? p.primary : p.accent,
+                    usage
+                        ? l.statusNotNeeded
+                        : running
+                            ? l.statusRunning
+                            : l.statusStopped,
+                    color: usage || running ? p.primary : p.accent,
                   ),
                   row(
                     l.statusBattery,
@@ -180,6 +184,13 @@ class _StatusScreenState extends State<StatusScreen>
                       ],
                     ),
                   ),
+                  if (!usage) ...[
+                    const SizedBox(height: 12),
+                    Text(
+                      l.fallbackNote,
+                      style: TextStyle(fontSize: 13, height: 1.5, color: p.muted),
+                    ),
+                  ],
                   const SizedBox(height: 16),
                   Text(
                     l.autostartNote,

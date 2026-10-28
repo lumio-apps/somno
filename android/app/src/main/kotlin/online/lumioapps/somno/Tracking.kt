@@ -6,6 +6,9 @@ import android.os.Build
 
 object Tracking {
     fun start(context: Context) {
+        if (!EventStore.shouldRunNow(context)) {
+            return
+        }
         try {
             val intent = Intent(context, SleepService::class.java)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

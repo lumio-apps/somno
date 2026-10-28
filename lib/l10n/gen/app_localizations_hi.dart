@@ -597,7 +597,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get usageIsOn =>
-      'यूसेज एक्सेस चालू है। नींद Android की अपनी स्क्रीन हिस्ट्री से पढ़ी जाती है।';
+      'यूसेज एक्सेस चालू है। नींद Android की अपनी स्क्रीन हिस्ट्री से पढ़ी जाती है, और कोई बैकग्राउंड सर्विस नहीं चलती।';
 
   @override
   String get allowUsage => 'यूसेज एक्सेस दें';
@@ -612,4 +612,11 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get openAutostart => 'ऑटोस्टार्ट सेटिंग खोलें';
+
+  @override
+  String get statusNotNeeded => 'ज़रूरी नहीं';
+
+  @override
+  String get fallbackNote =>
+      'यूसेज एक्सेस के बिना बैकग्राउंड ट्रैकर सिर्फ़ आपकी नींद की समय-सीमा में चलता है, और तभी जब उस दौरान Somno खुला हो। यूसेज एक्सेस देना ज़्यादा भरोसेमंद है।';
 }

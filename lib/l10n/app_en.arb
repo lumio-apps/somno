@@ -334,9 +334,11 @@
   "statusNever": "never",
   "statusPhone": "Phone",
   "usageExplain": "Recommended. Some phones, such as Xiaomi, Oppo and Vivo, stop background apps at night. With Usage access, Somno reads when your screen turned off and when you unlocked from Android itself, so your sleep is still found. Only these screen times are read, never which apps you use. Nothing leaves your phone.",
-  "usageIsOn": "Usage access is on. Sleep is read from Android's own screen history.",
+  "usageIsOn": "Usage access is on. Sleep is read from Android's own screen history, and no background service runs.",
   "allowUsage": "Allow usage access",
   "usageBanner": "Allow Usage access so Somno can find your sleep even if Android stops it at night.",
   "autostartNote": "Xiaomi, Oppo, Vivo, Huawei and Honor: also allow Autostart and background activity for Somno.",
-  "openAutostart": "Open autostart settings"
+  "openAutostart": "Open autostart settings",
+  "statusNotNeeded": "Not needed",
+  "fallbackNote": "Without Usage access, the background tracker runs only inside your sleep window, and only if Somno was opened during it. Allowing Usage access is more reliable."
 }

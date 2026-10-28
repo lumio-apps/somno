@@ -17,7 +17,25 @@ class NativeBridge {
 
   Future<void> stopTracking() => _call('stopTracking');
 
+  /// Starts the tracker only when it is needed, and stops it when it is not.
   Future<void> ensureTracking() => _call('ensureTracking');
+
+  /// Tells the tracker the sleep window. [mode] is the TrackingMode index.
+  Future<void> setWindow({
+    required int mode,
+    required int start,
+    required int end,
+  }) async {
+    try {
+      await _channel.invokeMethod<void>('setWindow', <String, int>{
+        'mode': mode,
+        'start': start,
+        'end': end,
+      });
+    } on Exception {
+      // Not running on Android (for example in tests): nothing to do.
+    }
+  }
 
   Future<void> openBatterySettings() => _call('openBatterySettings');
 

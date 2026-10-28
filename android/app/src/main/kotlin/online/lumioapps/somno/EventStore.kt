@@ -3,6 +3,7 @@ package online.lumioapps.somno
 import android.content.Context
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.Calendar
 
 /**
  * Tiny on-device queue of raw screen events. The Flutter side reads it
@@ -62,6 +63,54 @@ object EventStore {
     @Synchronized
     fun clear(context: Context) {
         prefs(context).edit().putString(KEY_QUEUE, "[]").commit()
+    }
+
+    /** The tracking window: mode 0 night, 1 day, 2 any time; minutes after midnight. */
+    fun setWindow(context: Context, mode: Int, start: Int, end: Int) {
+        prefs(context).edit()
+            .putInt("win_mode", mode)
+            .putInt("win_start", start)
+            .putInt("win_end", end)
+            .commit()
+    }
+
+    fun inWindowNow(context: Context): Boolean {
+        val p = prefs(context)
+        if (p.getInt("win_mode", 2) == 2) {
+            return true
+        }
+        val start = p.getInt("win_start", 0)
+        val end = p.getInt("win_end", 0)
+        if (start == end) {
+            return true
+        }
+        val cal = Calendar.getInstance()
+        val minute = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE)
+        return if (start < end) {
+            minute >= start && minute < end
+        } else {
+            minute >= start || minute < end
+        }
+    }
+
+    /** True from a screen-off inside the window until the next unlock. */
+    fun hasPendingOff(context: Context): Boolean =
+        prefs(context).getBoolean("pending_off", false)
+
+    fun setPendingOff(context: Context, pending: Boolean) {
+        prefs(context).edit().putBoolean("pending_off", pending).commit()
+    }
+
+    /**
+     * The background tracker is needed only when tracking is on, Usage access
+     * is not available, and we are inside the sleep window or waiting for the
+     * unlock that ends a sleep.
+     */
+    fun shouldRunNow(context: Context): Boolean {
+        if (!isEnabled(context) || ScreenHistory.hasAccess(context)) {
+            return false
+        }
+        return inWindowNow(context) || hasPendingOff(context)
     }
 
     fun setEnabled(context: Context, enabled: Boolean) {

@@ -603,7 +603,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get usageIsOn =>
-      'Usage access is on. Sleep is read from Android\'s own screen history.';
+      'Usage access is on. Sleep is read from Android\'s own screen history, and no background service runs.';
 
   @override
   String get allowUsage => 'Allow usage access';
@@ -618,4 +618,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get openAutostart => 'Open autostart settings';
+
+  @override
+  String get statusNotNeeded => 'Not needed';
+
+  @override
+  String get fallbackNote =>
+      'Without Usage access, the background tracker runs only inside your sleep window, and only if Somno was opened during it. Allowing Usage access is more reliable.';
 }

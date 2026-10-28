@@ -35,9 +35,24 @@ class MainActivity : FlutterActivity() {
                     result.success(null)
                 }
                 "ensureTracking" -> {
-                    if (EventStore.isEnabled(this) && !SleepService.running) {
-                        Tracking.start(this)
+                    // The app is open, so the phone is unlocked right now.
+                    EventStore.setPendingOff(this, false)
+                    if (EventStore.shouldRunNow(this)) {
+                        if (!SleepService.running) {
+                            Tracking.start(this)
+                        }
+                    } else if (SleepService.running) {
+                        Tracking.stop(this)
                     }
+                    result.success(null)
+                }
+                "setWindow" -> {
+                    EventStore.setWindow(
+                        this,
+                        call.argument<Int>("mode") ?: 2,
+                        call.argument<Int>("start") ?: 0,
+                        call.argument<Int>("end") ?: 0
+                    )
                     result.success(null)
                 }
                 "drainEvents" -> result.success(EventStore.drain(this))

@@ -214,6 +214,7 @@ class AppState extends ChangeNotifier {
     try {
       var events = NativeEvent.parse(await _native.drainEvents());
       final now = DateTime.now().millisecondsSinceEpoch;
+      await _syncWindow();
       final hasUsage = await _native.hasUsageAccess();
       if (hasUsage != usageAccess) {
         usageAccess = hasUsage;
@@ -284,11 +285,27 @@ class AppState extends ChangeNotifier {
     settings = change(settings);
     notifyListeners();
     await _store.save(settings);
+    if (before.mode != settings.mode ||
+        before.nightStart != settings.nightStart ||
+        before.nightEnd != settings.nightEnd ||
+        before.dayStart != settings.dayStart ||
+        before.dayEnd != settings.dayEnd) {
+      await _syncWindow();
+      await _native.ensureTracking();
+    }
     if (before.reminderEnabled != settings.reminderEnabled ||
         before.reminderMinute != settings.reminderMinute ||
         before.localeCode != settings.localeCode) {
       await _syncReminder();
     }
+  }
+
+  /// The tracker uses this to run only inside the sleep window.
+  Future<void> _syncWindow() {
+    final s = settings;
+    final start = s.mode == TrackingMode.day ? s.dayStart : s.nightStart;
+    final end = s.mode == TrackingMode.day ? s.dayEnd : s.nightEnd;
+    return _native.setWindow(mode: s.mode.index, start: start, end: end);
   }
 
   Future<void> _syncReminder() {
@@ -303,6 +320,7 @@ class AppState extends ChangeNotifier {
     await updateSettings((s) => s.copyWith(trackingEnabled: on));
     await _store.saveLastOff(null);
     await _store.saveLastUsageQuery(DateTime.now().millisecondsSinceEpoch);
+    await _syncWindow();
     if (on) {
       await _native.startTracking();
     } else {
@@ -324,6 +342,7 @@ class AppState extends ChangeNotifier {
         onboarded: true,
       ),
     );
+    await _syncWindow();
     await _native.startTracking();
     await refreshBattery();
   }

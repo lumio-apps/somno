@@ -22,8 +22,25 @@ class SleepService : Service() {
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
-                Intent.ACTION_SCREEN_OFF -> EventStore.add(context, "off")
-                Intent.ACTION_USER_PRESENT -> EventStore.add(context, "unlock")
+                Intent.ACTION_SCREEN_OFF -> {
+                    EventStore.add(context, "off")
+                    if (!EventStore.hasPendingOff(context)) {
+                        if (EventStore.inWindowNow(context)) {
+                            EventStore.setPendingOff(context, true)
+                        } else {
+                            // A sleep starting outside the window does not count.
+                            this@SleepService.stopSelf()
+                        }
+                    }
+                }
+                Intent.ACTION_USER_PRESENT -> {
+                    EventStore.add(context, "unlock")
+                    EventStore.setPendingOff(context, false)
+                    if (!EventStore.inWindowNow(context)) {
+                        // The window is over and the sleep has ended: stop.
+                        this@SleepService.stopSelf()
+                    }
+                }
             }
         }
     }
@@ -44,7 +61,7 @@ class SleepService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (!EventStore.isEnabled(this)) {
+        if (!EventStore.shouldRunNow(this)) {
             stopSelf()
             return START_NOT_STICKY
         }
