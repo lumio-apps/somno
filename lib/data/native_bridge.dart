@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
 
+import 'phone_info.dart';
+
 /// Talks to the Kotlin side (screen on/off listener, battery settings).
 class NativeBridge {
   static const MethodChannel _channel =
@@ -124,6 +126,28 @@ class NativeBridge {
       return result ?? '[]';
     } on Exception {
       return '[]';
+    }
+  }
+
+  /// Battery and device facts, read live. Null when they cannot be read.
+  Future<PhoneSnapshot?> phoneInfo() async {
+    try {
+      final result =
+          await _channel.invokeMapMethod<Object?, Object?>('phoneInfo');
+      return result == null ? null : PhoneSnapshot.fromMap(result);
+    } on Exception {
+      return null;
+    }
+  }
+
+  /// Opens Android's own battery usage page. False when only the normal
+  /// Settings could be opened.
+  Future<bool> openBatteryUsage() async {
+    try {
+      final result = await _channel.invokeMethod<bool>('openBatteryUsage');
+      return result ?? false;
+    } on Exception {
+      return false;
     }
   }
 

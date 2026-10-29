@@ -266,7 +266,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get privacyNote =>
-      'सारा डेटा इसी फ़ोन में रहता है। न अकाउंट, न विज्ञापन, न ट्रैकिंग। इंटरनेट सिर्फ़ अपडेट खोजने और डाउनलोड करने के लिए है।';
+      'सारा डेटा इसी फ़ोन में रहता है। न अकाउंट, न विज्ञापन, न ट्रैकिंग। फ़ोन की जानकारी सिर्फ़ यहीं दिखती है, कभी सेव, शेयर या अपलोड नहीं होती। इंटरनेट सिर्फ़ अपडेट खोजने और डाउनलोड करने के लिए है।';
 
   @override
   String get decrease => 'घटाएं';
@@ -323,7 +323,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get modeAnyDesc => 'दिन या रात, कोई भी लंबा अंतराल गिनें';
 
   @override
-  String get batteryTitle => 'Somno को बैकग्राउंड में चलने दें';
+  String get batteryTitle => 'बैटरी';
 
   @override
   String get batteryBody =>
@@ -619,4 +619,139 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get fallbackNote =>
       'यूसेज एक्सेस के बिना बैकग्राउंड ट्रैकर सिर्फ़ आपकी नींद की समय-सीमा में चलता है, और तभी जब उस दौरान Somno खुला हो। यूसेज एक्सेस देना ज़्यादा भरोसेमंद है।';
+
+  @override
+  String get navPhone => 'फ़ोन';
+
+  @override
+  String get phoneTitle => 'फ़ोन';
+
+  @override
+  String get onlyOnThisPhone => 'सिर्फ़ इसी फ़ोन पर';
+
+  @override
+  String get phoneLoading => 'फ़ोन की जानकारी पढ़ी जा रही है…';
+
+  @override
+  String get phoneUnavailable => 'फ़ोन की जानकारी नहीं पढ़ी जा सकी।';
+
+  @override
+  String get phoneNote =>
+      'यह टैब खुला रहने तक Android से सीधे पढ़ा जाता है। यहाँ कुछ भी सेव, शेयर या अपलोड नहीं होता।';
+
+  @override
+  String batteryPercent(int level) {
+    return 'बैटरी $level प्रतिशत';
+  }
+
+  @override
+  String get batteryCharging => 'चार्ज हो रही है';
+
+  @override
+  String get batteryDischarging => 'बैटरी पर';
+
+  @override
+  String get batteryNotCharging => 'लगा है, चार्ज नहीं हो रही';
+
+  @override
+  String get batteryFull => 'पूरी चार्ज';
+
+  @override
+  String get powerAc => 'AC';
+
+  @override
+  String get powerUsb => 'USB';
+
+  @override
+  String get powerWireless => 'वायरलेस';
+
+  @override
+  String get powerDock => 'डॉक';
+
+  @override
+  String get batteryTemp => 'तापमान';
+
+  @override
+  String get batteryHealth => 'सेहत';
+
+  @override
+  String get batteryVoltage => 'वोल्टेज';
+
+  @override
+  String batteryCycles(int count) {
+    return 'चार्ज साइकिल: $count';
+  }
+
+  @override
+  String get batterySaverOn => 'बैटरी सेवर चालू है।';
+
+  @override
+  String get healthGood => 'अच्छी';
+
+  @override
+  String get healthOverheat => 'बहुत गर्म';
+
+  @override
+  String get healthDead => 'घिस चुकी';
+
+  @override
+  String get healthOverVoltage => 'ओवर वोल्टेज';
+
+  @override
+  String get healthFailure => 'खराबी';
+
+  @override
+  String get healthCold => 'ठंडी';
+
+  @override
+  String get valueUnknown => 'पता नहीं';
+
+  @override
+  String get deviceTitle => 'यह फ़ोन';
+
+  @override
+  String get deviceModel => 'मॉडल';
+
+  @override
+  String get deviceAndroid => 'Android';
+
+  @override
+  String androidWithPatch(String version, String patch) {
+    return '$version · पैच $patch';
+  }
+
+  @override
+  String get deviceProcessor => 'प्रोसेसर';
+
+  @override
+  String coresCount(int count) {
+    return '$count कोर';
+  }
+
+  @override
+  String get deviceMemory => 'मेमोरी';
+
+  @override
+  String get deviceStorage => 'स्टोरेज';
+
+  @override
+  String freeOf(String free, String total) {
+    return '$total में से $free खाली';
+  }
+
+  @override
+  String get deviceScreen => 'स्क्रीन';
+
+  @override
+  String get deviceUptime => 'चालू रहने का समय';
+
+  @override
+  String get batteryUsageTitle => 'ऐप के हिसाब से बैटरी खपत';
+
+  @override
+  String get batteryUsageHint => 'Android का अपना पन्ना खुलेगा';
+
+  @override
+  String get batteryUsageMissing =>
+      'बैटरी खपत का पन्ना नहीं मिला। सेटिंग्स खुल गईं।';
 }

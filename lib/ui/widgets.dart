@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import '../l10n/gen/app_localizations.dart';
 import 'palette.dart';
 
-/// The Somno "Z" mark.
+/// The Somno mark: a flowing "S" like a sleep graph, with a small moon dot.
+///
+/// By default it is drawn on an ink rounded square, as in the launcher icon.
+/// Pass [color] to draw only the S and the dot in one colour.
 class SomnoLogo extends StatelessWidget {
   const SomnoLogo({super.key, this.size = 28, this.color});
 
@@ -12,44 +15,62 @@ class SomnoLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = color ?? SomnoPalette.of(context).primary;
     return SizedBox.square(
       dimension: size,
       child: ExcludeSemantics(
-        child: CustomPaint(painter: _LogoPainter(c)),
+        child: CustomPaint(painter: _LogoPainter(color)),
       ),
     );
   }
 }
 
 class _LogoPainter extends CustomPainter {
-  const _LogoPainter(this.color);
+  const _LogoPainter(this.mono);
 
-  final Color color;
+  final Color? mono;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final scale = size.width / 72;
-    canvas.scale(scale);
-    canvas.translate(-16, -12);
+    canvas.scale(size.width / 200);
+    final mark = mono;
+    if (mark == null) {
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+          const Rect.fromLTWH(0, 0, 200, 200),
+          const Radius.circular(46),
+        ),
+        Paint()..color = const Color(0xFF0C1226),
+      );
+    }
     final stroke = Paint()
-      ..color = color
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 11
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
+      ..strokeWidth = 16
+      ..strokeCap = StrokeCap.round;
+    if (mark == null) {
+      stroke.shader = const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFF6C86FF), Color(0xFF2DD4B4)],
+      ).createShader(const Rect.fromLTWH(64, 46, 70, 110));
+    } else {
+      stroke.color = mark;
+    }
     final path = Path()
-      ..moveTo(30, 34)
-      ..lineTo(68, 34)
-      ..lineTo(30, 68)
-      ..lineTo(70, 68);
+      ..moveTo(134, 64)
+      ..cubicTo(134, 40, 66, 40, 66, 78)
+      ..cubicTo(66, 114, 134, 90, 134, 126)
+      ..cubicTo(134, 160, 66, 160, 64, 136);
     canvas.drawPath(path, stroke);
-    canvas.drawCircle(const Offset(78, 24), 5, Paint()..color = color);
+    canvas.drawCircle(
+      const Offset(152, 48),
+      8,
+      Paint()..color = mark ?? const Color(0xFFFFC45C),
+    );
   }
 
   @override
   bool shouldRepaint(covariant _LogoPainter oldDelegate) =>
-      oldDelegate.color != color;
+      oldDelegate.mono != mono;
 }
 
 class Panel extends StatelessWidget {
@@ -65,12 +86,22 @@ class Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = SomnoPalette.of(context);
+    final light = Theme.of(context).brightness == Brightness.light;
     return Container(
       padding: padding,
       decoration: BoxDecoration(
         color: p.panel,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: p.line),
+        borderRadius: BorderRadius.circular(22),
+        border: light ? null : Border.all(color: p.line),
+        boxShadow: light
+            ? const [
+                BoxShadow(
+                  color: Color(0x120C1226),
+                  blurRadius: 12,
+                  offset: Offset(0, 3),
+                ),
+              ]
+            : null,
       ),
       child: child,
     );
@@ -100,7 +131,7 @@ class SectionLabel extends StatelessWidget {
   }
 }
 
-/// A row of equal pills where one value is selected.
+/// A segmented control: equal segments where one value is selected.
 class Pills<T> extends StatelessWidget {
   const Pills({
     super.key,
@@ -118,35 +149,35 @@ class Pills<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = SomnoPalette.of(context);
+    final light = Theme.of(context).brightness == Brightness.light;
     final children = <Widget>[];
     for (var i = 0; i < values.length; i++) {
       final value = values[i];
       final on = value == selected;
-      if (i > 0) {
-        children.add(const SizedBox(width: 8));
-      }
       children.add(
         Expanded(
           child: Semantics(
             selected: on,
             button: true,
             child: Material(
-              color: on ? p.primary : Colors.transparent,
-              shape: StadiumBorder(
-                side: on ? BorderSide.none : BorderSide(color: p.line),
-              ),
+              color: on ? p.raised : Colors.transparent,
+              elevation: on && light ? 1.5 : 0,
+              shadowColor: const Color(0x330C1226),
+              borderRadius: BorderRadius.circular(11),
               child: InkWell(
-                customBorder: const StadiumBorder(),
+                borderRadius: BorderRadius.circular(11),
                 onTap: () => onChanged(value),
                 child: SizedBox(
                   height: 44,
                   child: Center(
                     child: Text(
                       labelOf(value),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 15,
-                        fontWeight: on ? FontWeight.w600 : FontWeight.w500,
-                        color: on ? p.onPrimary : p.muted,
+                        fontWeight: on ? FontWeight.w700 : FontWeight.w500,
+                        color: on ? p.text : p.muted,
                       ),
                     ),
                   ),
@@ -157,7 +188,14 @@ class Pills<T> extends StatelessWidget {
         ),
       );
     }
-    return Row(children: children);
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: p.track,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(children: children),
+    );
   }
 }
 
@@ -367,7 +405,7 @@ class ProgressBar extends StatelessWidget {
     return Container(
       height: height,
       decoration: BoxDecoration(
-        color: p.line,
+        color: p.track,
         borderRadius: BorderRadius.circular(999),
       ),
       child: FractionallySizedBox(

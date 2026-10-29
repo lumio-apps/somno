@@ -266,7 +266,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacyNote =>
-      'All data stays on this phone. No account, no ads, no tracking. Internet is only used to check for and download updates.';
+      'All data stays on this phone. No account, no ads, no tracking. Phone details are only shown here and are never saved, shared or uploaded. Internet is only used to check for and download updates.';
 
   @override
   String get decrease => 'Decrease';
@@ -323,7 +323,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get modeAnyDesc => 'Count any long gap, day or night';
 
   @override
-  String get batteryTitle => 'Let Somno rest in the background';
+  String get batteryTitle => 'Battery';
 
   @override
   String get batteryBody =>
@@ -625,4 +625,139 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get fallbackNote =>
       'Without Usage access, the background tracker runs only inside your sleep window, and only if Somno was opened during it. Allowing Usage access is more reliable.';
+
+  @override
+  String get navPhone => 'Phone';
+
+  @override
+  String get phoneTitle => 'Phone';
+
+  @override
+  String get onlyOnThisPhone => 'Only on this phone';
+
+  @override
+  String get phoneLoading => 'Reading your phone…';
+
+  @override
+  String get phoneUnavailable => 'Phone details could not be read.';
+
+  @override
+  String get phoneNote =>
+      'Read live from Android while this tab is open. Nothing here is saved, shared or uploaded.';
+
+  @override
+  String batteryPercent(int level) {
+    return 'Battery $level percent';
+  }
+
+  @override
+  String get batteryCharging => 'Charging';
+
+  @override
+  String get batteryDischarging => 'On battery';
+
+  @override
+  String get batteryNotCharging => 'Plugged in, not charging';
+
+  @override
+  String get batteryFull => 'Full';
+
+  @override
+  String get powerAc => 'AC';
+
+  @override
+  String get powerUsb => 'USB';
+
+  @override
+  String get powerWireless => 'Wireless';
+
+  @override
+  String get powerDock => 'Dock';
+
+  @override
+  String get batteryTemp => 'Temperature';
+
+  @override
+  String get batteryHealth => 'Health';
+
+  @override
+  String get batteryVoltage => 'Voltage';
+
+  @override
+  String batteryCycles(int count) {
+    return 'Charge cycles: $count';
+  }
+
+  @override
+  String get batterySaverOn => 'Battery saver is on.';
+
+  @override
+  String get healthGood => 'Good';
+
+  @override
+  String get healthOverheat => 'Overheating';
+
+  @override
+  String get healthDead => 'Worn out';
+
+  @override
+  String get healthOverVoltage => 'Over voltage';
+
+  @override
+  String get healthFailure => 'Failure';
+
+  @override
+  String get healthCold => 'Cold';
+
+  @override
+  String get valueUnknown => 'Unknown';
+
+  @override
+  String get deviceTitle => 'This phone';
+
+  @override
+  String get deviceModel => 'Model';
+
+  @override
+  String get deviceAndroid => 'Android';
+
+  @override
+  String androidWithPatch(String version, String patch) {
+    return '$version · patch $patch';
+  }
+
+  @override
+  String get deviceProcessor => 'Processor';
+
+  @override
+  String coresCount(int count) {
+    return '$count cores';
+  }
+
+  @override
+  String get deviceMemory => 'Memory';
+
+  @override
+  String get deviceStorage => 'Storage';
+
+  @override
+  String freeOf(String free, String total) {
+    return '$free free of $total';
+  }
+
+  @override
+  String get deviceScreen => 'Screen';
+
+  @override
+  String get deviceUptime => 'Uptime';
+
+  @override
+  String get batteryUsageTitle => 'Battery use per app';
+
+  @override
+  String get batteryUsageHint => 'Opens Android\'s own screen';
+
+  @override
+  String get batteryUsageMissing =>
+      'Battery usage page was not found. Settings opened instead.';
 }

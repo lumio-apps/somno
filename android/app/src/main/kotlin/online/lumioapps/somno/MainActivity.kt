@@ -86,6 +86,8 @@ class MainActivity : FlutterActivity() {
                     val to = call.argument<Number>("to")?.toLong() ?: 0L
                     result.success(ScreenHistory.read(this, from, to))
                 }
+                "phoneInfo" -> result.success(PhoneInfo.snapshot(this))
+                "openBatteryUsage" -> result.success(PhoneInfo.openBatteryUsage(this))
                 "trackingStatus" -> result.success(trackingStatus())
                 "openAutostart" -> result.success(openAutostart())
                 "appVersion" -> result.success(appVersion())

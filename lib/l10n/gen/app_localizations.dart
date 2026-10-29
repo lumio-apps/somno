@@ -575,7 +575,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyNote.
   ///
   /// In en, this message translates to:
-  /// **'All data stays on this phone. No account, no ads, no tracking. Internet is only used to check for and download updates.'**
+  /// **'All data stays on this phone. No account, no ads, no tracking. Phone details are only shown here and are never saved, shared or uploaded. Internet is only used to check for and download updates.'**
   String get privacyNote;
 
   /// No description provided for @decrease.
@@ -677,7 +677,7 @@ abstract class AppLocalizations {
   /// No description provided for @batteryTitle.
   ///
   /// In en, this message translates to:
-  /// **'Let Somno rest in the background'**
+  /// **'Battery'**
   String get batteryTitle;
 
   /// No description provided for @batteryBody.
@@ -1195,6 +1195,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Without Usage access, the background tracker runs only inside your sleep window, and only if Somno was opened during it. Allowing Usage access is more reliable.'**
   String get fallbackNote;
+
+  /// No description provided for @navPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get navPhone;
+
+  /// No description provided for @phoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phoneTitle;
+
+  /// No description provided for @onlyOnThisPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Only on this phone'**
+  String get onlyOnThisPhone;
+
+  /// No description provided for @phoneLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading your phone…'**
+  String get phoneLoading;
+
+  /// No description provided for @phoneUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone details could not be read.'**
+  String get phoneUnavailable;
+
+  /// No description provided for @phoneNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Read live from Android while this tab is open. Nothing here is saved, shared or uploaded.'**
+  String get phoneNote;
+
+  /// No description provided for @batteryPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery {level} percent'**
+  String batteryPercent(int level);
+
+  /// No description provided for @batteryCharging.
+  ///
+  /// In en, this message translates to:
+  /// **'Charging'**
+  String get batteryCharging;
+
+  /// No description provided for @batteryDischarging.
+  ///
+  /// In en, this message translates to:
+  /// **'On battery'**
+  String get batteryDischarging;
+
+  /// No description provided for @batteryNotCharging.
+  ///
+  /// In en, this message translates to:
+  /// **'Plugged in, not charging'**
+  String get batteryNotCharging;
+
+  /// No description provided for @batteryFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Full'**
+  String get batteryFull;
+
+  /// No description provided for @powerAc.
+  ///
+  /// In en, this message translates to:
+  /// **'AC'**
+  String get powerAc;
+
+  /// No description provided for @powerUsb.
+  ///
+  /// In en, this message translates to:
+  /// **'USB'**
+  String get powerUsb;
+
+  /// No description provided for @powerWireless.
+  ///
+  /// In en, this message translates to:
+  /// **'Wireless'**
+  String get powerWireless;
+
+  /// No description provided for @powerDock.
+  ///
+  /// In en, this message translates to:
+  /// **'Dock'**
+  String get powerDock;
+
+  /// No description provided for @batteryTemp.
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get batteryTemp;
+
+  /// No description provided for @batteryHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get batteryHealth;
+
+  /// No description provided for @batteryVoltage.
+  ///
+  /// In en, this message translates to:
+  /// **'Voltage'**
+  String get batteryVoltage;
+
+  /// No description provided for @batteryCycles.
+  ///
+  /// In en, this message translates to:
+  /// **'Charge cycles: {count}'**
+  String batteryCycles(int count);
+
+  /// No description provided for @batterySaverOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery saver is on.'**
+  String get batterySaverOn;
+
+  /// No description provided for @healthGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get healthGood;
+
+  /// No description provided for @healthOverheat.
+  ///
+  /// In en, this message translates to:
+  /// **'Overheating'**
+  String get healthOverheat;
+
+  /// No description provided for @healthDead.
+  ///
+  /// In en, this message translates to:
+  /// **'Worn out'**
+  String get healthDead;
+
+  /// No description provided for @healthOverVoltage.
+  ///
+  /// In en, this message translates to:
+  /// **'Over voltage'**
+  String get healthOverVoltage;
+
+  /// No description provided for @healthFailure.
+  ///
+  /// In en, this message translates to:
+  /// **'Failure'**
+  String get healthFailure;
+
+  /// No description provided for @healthCold.
+  ///
+  /// In en, this message translates to:
+  /// **'Cold'**
+  String get healthCold;
+
+  /// No description provided for @valueUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get valueUnknown;
+
+  /// No description provided for @deviceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone'**
+  String get deviceTitle;
+
+  /// No description provided for @deviceModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get deviceModel;
+
+  /// No description provided for @deviceAndroid.
+  ///
+  /// In en, this message translates to:
+  /// **'Android'**
+  String get deviceAndroid;
+
+  /// No description provided for @androidWithPatch.
+  ///
+  /// In en, this message translates to:
+  /// **'{version} · patch {patch}'**
+  String androidWithPatch(String version, String patch);
+
+  /// No description provided for @deviceProcessor.
+  ///
+  /// In en, this message translates to:
+  /// **'Processor'**
+  String get deviceProcessor;
+
+  /// No description provided for @coresCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} cores'**
+  String coresCount(int count);
+
+  /// No description provided for @deviceMemory.
+  ///
+  /// In en, this message translates to:
+  /// **'Memory'**
+  String get deviceMemory;
+
+  /// No description provided for @deviceStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage'**
+  String get deviceStorage;
+
+  /// No description provided for @freeOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{free} free of {total}'**
+  String freeOf(String free, String total);
+
+  /// No description provided for @deviceScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen'**
+  String get deviceScreen;
+
+  /// No description provided for @deviceUptime.
+  ///
+  /// In en, this message translates to:
+  /// **'Uptime'**
+  String get deviceUptime;
+
+  /// No description provided for @batteryUsageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery use per app'**
+  String get batteryUsageTitle;
+
+  /// No description provided for @batteryUsageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens Android\'s own screen'**
+  String get batteryUsageHint;
+
+  /// No description provided for @batteryUsageMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery usage page was not found. Settings opened instead.'**
+  String get batteryUsageMissing;
 }
 
 class _AppLocalizationsDelegate

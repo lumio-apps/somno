@@ -46,9 +46,17 @@ nothing to wear and nothing to upload.
 - **Naps** (20 minutes to 1.5 hours) are kept apart, so they never change your night averages
 - Week and month history, with add, edit and delete for every session
 
+**Phone** (new tab)
+- **Battery**: level, charging state and source, temperature, health, voltage, and charge
+  cycles on phones that report them
+- **This phone**: model, Android version and security patch, processor, free memory and
+  storage, screen size and refresh rate, and uptime
+- A shortcut to Android's own battery usage page (Android keeps per-app battery use to itself)
+- Read live while the tab is open. Nothing is saved, shared or uploaded
+
 **Comfort**
 - Optional **bedtime reminder** at a time you choose
-- Dark, light and system themes, plus four accent colours (teal, purple, amber, blue)
+- Dark, light and system themes, plus four accent colours (blue, purple, amber, teal)
 - English and Hindi, switchable inside the app
 - A battery guide that helps Android keep the tracker alive
 - A shortcut to Android's Digital Wellbeing page
@@ -103,6 +111,8 @@ The detection logic is plain Dart with no Flutter dependency, and it is covered 
 Somno is built to be checkable, not just promised.
 
 - All sleep data stays in a local database on your phone. There is no account and no sync.
+- Phone details (battery, device facts) are read live from Android, shown on the Phone tab
+  and never saved, shared or uploaded.
 - No analytics, no crash reporting, no ads, no third-party SDKs.
 - The only network use is **one request to the GitHub Releases API** to look for a newer
   version (at most once a day, and you can turn it off), and the APK download when you choose
@@ -185,19 +195,20 @@ key, otherwise Android will refuse to update the app and in-app updates will fai
 
 ```
 lib/
-  core/       pure Dart: sleep detection, stats, versions (unit tested)
+  core/       pure Dart: sleep detection, stats, versions, phone formatting (unit tested)
   data/       models, settings, SQLite sessions, update service, native bridge
   state/      app state (ChangeNotifier + InheritedNotifier, no extra packages)
-  screens/    Today, History, Settings, Edit, Setup, Battery guide, Update dialog
+  screens/    Today, History, Phone, Settings, Edit, Setup, Battery guide, Update dialog
   ui/         palette, accent colours, shared widgets
   l10n/       English and Hindi texts (ARB)
 android/app/src/main/kotlin/online/lumioapps/somno/
   SleepService.kt      screen on/off listener (foreground service)
   EventStore.kt        event queue in SharedPreferences
   Reminder*.kt         bedtime reminder alarm and notification
+  PhoneInfo.kt         live battery and device facts for the Phone tab
   BootReceiver.kt      restart after boot or update
   MainActivity.kt      bridge between Flutter and Android
-test/                  detection, windows, age goals, stats, versions
+test/                  detection, windows, age goals, stats, versions, phone facts
 ```
 
 **Stack:** Flutter (Material 3), `sqflite`, `shared_preferences`, Kotlin for the Android side.

@@ -8,6 +8,7 @@ import '../core/stats.dart';
 import '../core/version.dart';
 import '../data/models.dart';
 import '../data/native_bridge.dart';
+import '../data/phone_info.dart';
 import '../data/session_db.dart';
 import '../data/settings_store.dart';
 import '../data/update_service.dart';
@@ -176,6 +177,12 @@ class AppState extends ChangeNotifier {
 
   /// False when Digital Wellbeing was not found and Settings opened instead.
   Future<bool> openWellbeing() => _native.openWellbeing();
+
+  /// Battery and device facts, read live and never saved.
+  Future<PhoneSnapshot?> phoneInfo() => _native.phoneInfo();
+
+  /// False when only the normal Settings opened instead of battery usage.
+  Future<bool> openBatteryUsage() => _native.openBatteryUsage();
 
   Future<void> onResume() async {
     if (!loaded || !settings.onboarded) {
