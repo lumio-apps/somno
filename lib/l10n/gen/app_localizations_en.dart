@@ -599,7 +599,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get usageExplain =>
-      'Recommended. Some phones, such as Xiaomi, Oppo and Vivo, stop background apps at night. With Usage access, Somno reads when your screen turned off and when you unlocked from Android itself, so your sleep is still found. Only these screen times are read, never which apps you use. Nothing leaves your phone.';
+      'Recommended. Some phones, such as Xiaomi, Oppo and Vivo, stop background apps at night. With Usage access, Somno reads when your screen turned off and when you unlocked from Android itself, so your sleep is still found. It also lets the Phone tab show your screen time and most used apps. All of this is shown only on this phone and is never saved, shared or uploaded.';
 
   @override
   String get usageIsOn =>
@@ -760,4 +760,38 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get batteryUsageMissing =>
       'Battery usage page was not found. Settings opened instead.';
+
+  @override
+  String get screenTimeTitle => 'Screen time today';
+
+  @override
+  String screenTimeLess(int percent) {
+    return '$percent% less than yesterday so far';
+  }
+
+  @override
+  String screenTimeMore(int percent) {
+    return '$percent% more than yesterday so far';
+  }
+
+  @override
+  String get screenTimeSame => 'About the same as yesterday so far';
+
+  @override
+  String get mostUsedToday => 'Most used today';
+
+  @override
+  String get screenTimeWeek => 'Last 7 days';
+
+  @override
+  String screenTimeAvg(String time) {
+    return 'Avg $time';
+  }
+
+  @override
+  String get screenTimeNeedAccess =>
+      'Allow Usage access to see how long you use your phone and which apps. It is read from Android, shown only here, and never saved, shared or uploaded.';
+
+  @override
+  String get screenTimeNone => 'No app use recorded yet today.';
 }

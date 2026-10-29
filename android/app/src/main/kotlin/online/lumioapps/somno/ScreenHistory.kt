@@ -12,8 +12,9 @@ import org.json.JSONObject
 /**
  * Reads when the screen turned off and when the phone was unlocked from
  * Android's own usage history. This works even when Android stopped the
- * tracking service during the night. It reads only these two kinds of
- * event, never which apps were used, and nothing leaves the phone.
+ * tracking service during the night. Sleep detection reads only these two
+ * kinds of event. App screen time is read separately in AppUsage.kt for the
+ * Phone tab. Nothing leaves the phone.
  */
 object ScreenHistory {
     // UsageEvents.Event.SCREEN_NON_INTERACTIVE and KEYGUARD_HIDDEN (API 28).

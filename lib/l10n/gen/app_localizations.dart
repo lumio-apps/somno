@@ -1151,7 +1151,7 @@ abstract class AppLocalizations {
   /// No description provided for @usageExplain.
   ///
   /// In en, this message translates to:
-  /// **'Recommended. Some phones, such as Xiaomi, Oppo and Vivo, stop background apps at night. With Usage access, Somno reads when your screen turned off and when you unlocked from Android itself, so your sleep is still found. Only these screen times are read, never which apps you use. Nothing leaves your phone.'**
+  /// **'Recommended. Some phones, such as Xiaomi, Oppo and Vivo, stop background apps at night. With Usage access, Somno reads when your screen turned off and when you unlocked from Android itself, so your sleep is still found. It also lets the Phone tab show your screen time and most used apps. All of this is shown only on this phone and is never saved, shared or uploaded.'**
   String get usageExplain;
 
   /// No description provided for @usageIsOn.
@@ -1441,6 +1441,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Battery usage page was not found. Settings opened instead.'**
   String get batteryUsageMissing;
+
+  /// No description provided for @screenTimeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen time today'**
+  String get screenTimeTitle;
+
+  /// No description provided for @screenTimeLess.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% less than yesterday so far'**
+  String screenTimeLess(int percent);
+
+  /// No description provided for @screenTimeMore.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% more than yesterday so far'**
+  String screenTimeMore(int percent);
+
+  /// No description provided for @screenTimeSame.
+  ///
+  /// In en, this message translates to:
+  /// **'About the same as yesterday so far'**
+  String get screenTimeSame;
+
+  /// No description provided for @mostUsedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Most used today'**
+  String get mostUsedToday;
+
+  /// No description provided for @screenTimeWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 7 days'**
+  String get screenTimeWeek;
+
+  /// No description provided for @screenTimeAvg.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg {time}'**
+  String screenTimeAvg(String time);
+
+  /// No description provided for @screenTimeNeedAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Usage access to see how long you use your phone and which apps. It is read from Android, shown only here, and never saved, shared or uploaded.'**
+  String get screenTimeNeedAccess;
+
+  /// No description provided for @screenTimeNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No app use recorded yet today.'**
+  String get screenTimeNone;
 }
 
 class _AppLocalizationsDelegate

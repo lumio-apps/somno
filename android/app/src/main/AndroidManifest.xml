@@ -4,7 +4,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Lets Somno hand its own downloaded update to the Android installer. -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <!-- Lets Somno read screen off and unlock times from Android itself. -->
+    <!-- Lets Somno read screen off and unlock times, and app screen time for the
+         Phone tab, from Android itself. Nothing is saved or sent. -->
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
@@ -76,6 +77,16 @@
     <queries>
         <package android:name="com.google.android.apps.wellbeing" />
         <package android:name="com.samsung.android.forest" />
+        <!-- Lets Somno see the names and icons of apps that have a launcher icon,
+             for the screen time list on the Phone tab. Nothing is stored or sent. -->
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.HOME" />
+        </intent>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT" />
             <data android:mimeType="text/plain" />

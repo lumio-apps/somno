@@ -51,6 +51,8 @@ nothing to wear and nothing to upload.
   cycles on phones that report them
 - **This phone**: model, Android version and security patch, processor, free memory and
   storage, screen size and refresh rate, and uptime
+- **Screen time** (needs Usage access): today's total, the 5 most used apps with their icons,
+  a 7-day chart, and how today compares with yesterday so far
 - A shortcut to Android's own battery usage page (Android keeps per-app battery use to itself)
 - Read live while the tab is open. Nothing is saved, shared or uploaded
 
@@ -122,9 +124,10 @@ Somno is built to be checkable, not just promised.
 | Permission | Why it is needed |
 | --- | --- |
 | `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_SPECIAL_USE` | Keep the screen-event listener running |
-| `PACKAGE_USAGE_STATS` (optional, you grant it) | Read screen-off and unlock times from Android's own history, so sleep is found even if the phone stops the tracker at night. Only these two kinds of event are read, never which apps you use |
+| `PACKAGE_USAGE_STATS` (optional, you grant it) | Read screen-off and unlock times from Android's own history, so sleep is found even if the phone stops the tracker at night, and read app screen time for the Phone tab. All of it is shown only on the phone and never saved, shared or uploaded |
 | `RECEIVE_BOOT_COMPLETED` | Start tracking again after the phone restarts |
 | `POST_NOTIFICATIONS` | The tracking notice and the optional bedtime reminder |
+| Launcher-app visibility (`<queries>`, no permission) | Show the names and icons of the apps in the screen time list |
 | `INTERNET` | Look for and download new versions from GitHub |
 | `REQUEST_INSTALL_PACKAGES` | Hand a downloaded update to the Android installer |
 
@@ -206,6 +209,7 @@ android/app/src/main/kotlin/online/lumioapps/somno/
   EventStore.kt        event queue in SharedPreferences
   Reminder*.kt         bedtime reminder alarm and notification
   PhoneInfo.kt         live battery and device facts for the Phone tab
+  AppUsage.kt          app screen time and icons (needs Usage access)
   BootReceiver.kt      restart after boot or update
   MainActivity.kt      bridge between Flutter and Android
 test/                  detection, windows, age goals, stats, versions, phone facts

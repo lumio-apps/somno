@@ -593,7 +593,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get usageExplain =>
-      'सुझाया गया। Xiaomi, Oppo और Vivo जैसे कुछ फ़ोन रात में बैकग्राउंड ऐप बंद कर देते हैं। यूसेज एक्सेस मिलने पर Somno स्क्रीन कब बंद हुई और कब अनलॉक हुआ, यह Android से ही पढ़ लेता है, इसलिए नींद फिर भी मिल जाती है। सिर्फ़ ये स्क्रीन के समय पढ़े जाते हैं, आप कौन से ऐप चलाते हैं यह नहीं। कुछ भी फ़ोन से बाहर नहीं जाता।';
+      'सुझाया गया। Xiaomi, Oppo और Vivo जैसे कुछ फ़ोन रात में बैकग्राउंड ऐप बंद कर देते हैं। यूसेज एक्सेस मिलने पर Somno स्क्रीन कब बंद हुई और कब अनलॉक हुआ, यह Android से ही पढ़ लेता है, इसलिए नींद फिर भी मिल जाती है। इसी से फ़ोन टैब में आपका स्क्रीन टाइम और सबसे ज़्यादा चले ऐप दिखते हैं। यह सब सिर्फ़ इसी फ़ोन पर दिखता है और कभी सेव, शेयर या अपलोड नहीं होता।';
 
   @override
   String get usageIsOn =>
@@ -754,4 +754,38 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get batteryUsageMissing =>
       'बैटरी खपत का पन्ना नहीं मिला। सेटिंग्स खुल गईं।';
+
+  @override
+  String get screenTimeTitle => 'आज का स्क्रीन टाइम';
+
+  @override
+  String screenTimeLess(int percent) {
+    return 'अब तक कल से $percent% कम';
+  }
+
+  @override
+  String screenTimeMore(int percent) {
+    return 'अब तक कल से $percent% ज़्यादा';
+  }
+
+  @override
+  String get screenTimeSame => 'अब तक लगभग कल जितना';
+
+  @override
+  String get mostUsedToday => 'आज सबसे ज़्यादा चले';
+
+  @override
+  String get screenTimeWeek => 'पिछले 7 दिन';
+
+  @override
+  String screenTimeAvg(String time) {
+    return 'औसत $time';
+  }
+
+  @override
+  String get screenTimeNeedAccess =>
+      'फ़ोन कितना और कौन से ऐप चले, यह देखने के लिए यूसेज एक्सेस दें। यह Android से पढ़ा जाता है, सिर्फ़ यहीं दिखता है, और कभी सेव, शेयर या अपलोड नहीं होता।';
+
+  @override
+  String get screenTimeNone => 'आज अभी तक कोई ऐप इस्तेमाल दर्ज नहीं हुआ।';
 }

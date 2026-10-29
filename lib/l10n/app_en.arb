@@ -333,7 +333,7 @@
   "statusLastUnlock": "Last unlock seen",
   "statusNever": "never",
   "statusPhone": "Phone",
-  "usageExplain": "Recommended. Some phones, such as Xiaomi, Oppo and Vivo, stop background apps at night. With Usage access, Somno reads when your screen turned off and when you unlocked from Android itself, so your sleep is still found. Only these screen times are read, never which apps you use. Nothing leaves your phone.",
+  "usageExplain": "Recommended. Some phones, such as Xiaomi, Oppo and Vivo, stop background apps at night. With Usage access, Somno reads when your screen turned off and when you unlocked from Android itself, so your sleep is still found. It also lets the Phone tab show your screen time and most used apps. All of this is shown only on this phone and is never saved, shared or uploaded.",
   "usageIsOn": "Usage access is on. Sleep is read from Android's own screen history, and no background service runs.",
   "allowUsage": "Allow usage access",
   "usageBanner": "Allow Usage access so Somno can find your sleep even if Android stops it at night.",
@@ -387,5 +387,17 @@
   "deviceUptime": "Uptime",
   "batteryUsageTitle": "Battery use per app",
   "batteryUsageHint": "Opens Android's own screen",
-  "batteryUsageMissing": "Battery usage page was not found. Settings opened instead."
+  "batteryUsageMissing": "Battery usage page was not found. Settings opened instead.",
+  "screenTimeTitle": "Screen time today",
+  "screenTimeLess": "{percent}% less than yesterday so far",
+  "@screenTimeLess": {"placeholders": {"percent": {"type": "int"}}},
+  "screenTimeMore": "{percent}% more than yesterday so far",
+  "@screenTimeMore": {"placeholders": {"percent": {"type": "int"}}},
+  "screenTimeSame": "About the same as yesterday so far",
+  "mostUsedToday": "Most used today",
+  "screenTimeWeek": "Last 7 days",
+  "screenTimeAvg": "Avg {time}",
+  "@screenTimeAvg": {"placeholders": {"time": {"type": "String"}}},
+  "screenTimeNeedAccess": "Allow Usage access to see how long you use your phone and which apps. It is read from Android, shown only here, and never saved, shared or uploaded.",
+  "screenTimeNone": "No app use recorded yet today."
 }

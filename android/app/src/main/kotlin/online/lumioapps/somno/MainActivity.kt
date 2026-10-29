@@ -86,6 +86,21 @@ class MainActivity : FlutterActivity() {
                     val to = call.argument<Number>("to")?.toLong() ?: 0L
                     result.success(ScreenHistory.read(this, from, to))
                 }
+                "appUsage" -> {
+                    val from = call.argument<Number>("from")?.toLong() ?: 0L
+                    val to = call.argument<Number>("to")?.toLong() ?: 0L
+                    Thread {
+                        val list = try {
+                            AppUsage.read(this, from, to)
+                        } catch (e: Exception) {
+                            emptyList()
+                        }
+                        runOnUiThread { result.success(list) }
+                    }.start()
+                }
+                "appIcon" -> {
+                    result.success(AppUsage.icon(this, call.argument<String>("package") ?: ""))
+                }
                 "phoneInfo" -> result.success(PhoneInfo.snapshot(this))
                 "openBatteryUsage" -> result.success(PhoneInfo.openBatteryUsage(this))
                 "trackingStatus" -> result.success(trackingStatus())

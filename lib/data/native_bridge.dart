@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 
+import '../core/app_usage.dart';
 import 'phone_info.dart';
 
 /// Talks to the Kotlin side (screen on/off listener, battery settings).
@@ -135,6 +136,36 @@ class NativeBridge {
       final result =
           await _channel.invokeMapMethod<Object?, Object?>('phoneInfo');
       return result == null ? null : PhoneSnapshot.fromMap(result);
+    } on Exception {
+      return null;
+    }
+  }
+
+  /// Apps with screen time between two moments, most used first. Empty
+  /// without Usage access.
+  Future<List<AppUse>> appUsage(int fromMs, int toMs) async {
+    try {
+      final result = await _channel.invokeListMethod<Object?>(
+        'appUsage',
+        <String, int>{'from': fromMs, 'to': toMs},
+      );
+      final list = <AppUse>[];
+      for (final item in result ?? const <Object?>[]) {
+        if (item is Map) {
+          list.add(AppUse.fromMap(item));
+        }
+      }
+      return list;
+    } on Exception {
+      return <AppUse>[];
+    }
+  }
+
+  /// The app's icon as PNG bytes, or null.
+  Future<Uint8List?> appIcon(String package) async {
+    try {
+      return await _channel
+          .invokeMethod<Uint8List>('appIcon', <String, String>{'package': package});
     } on Exception {
       return null;
     }

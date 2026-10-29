@@ -1,11 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show Uint8List;
 
+import '../core/app_usage.dart';
 import '../core/phone_format.dart';
 import '../data/phone_info.dart';
 import '../l10n/gen/app_localizations.dart';
 import '../state/app_state.dart';
+import '../ui/format.dart';
 import '../ui/palette.dart';
 import '../ui/widgets.dart';
 
@@ -26,6 +29,14 @@ class _PhoneScreenState extends State<PhoneScreen> with WidgetsBindingObserver {
   bool _failed = false;
   bool _foreground = true;
   Timer? _timer;
+  int _ticks = 0;
+
+  /// Screen time. [_usage] stays null until it is read; [_needAccess] is true
+  /// when Usage access is off.
+  ScreenTimeReport? _usage;
+  bool _needAccess = false;
+  bool _readingUsage = false;
+  final Map<String, Uint8List?> _icons = <String, Uint8List?>{};
 
   @override
   void initState() {
@@ -64,8 +75,77 @@ class _PhoneScreenState extends State<PhoneScreen> with WidgetsBindingObserver {
     _timer?.cancel();
     _timer = null;
     if (widget.active && _foreground) {
+      _ticks = 0;
       _load();
-      _timer = Timer.periodic(const Duration(seconds: 5), (_) => _load());
+      _loadUsage();
+      _timer = Timer.periodic(const Duration(seconds: 5), (_) {
+        _ticks++;
+        _load();
+        // Screen time changes slowly, so it is read about every 30 seconds.
+        if (_ticks % 6 == 0) {
+          _loadUsage();
+        }
+      });
+    }
+  }
+
+  Future<void> _loadUsage() async {
+    if (_readingUsage) {
+      return;
+    }
+    _readingUsage = true;
+    try {
+      final app = AppScope.of(context);
+      await app.refreshAccess();
+      if (!mounted) {
+        return;
+      }
+      if (app.usageAccess != true) {
+        setState(() {
+          _needAccess = true;
+          _usage = null;
+        });
+        return;
+      }
+      final now = DateTime.now();
+      final days = <Future<List<AppUse>>>[];
+      for (var back = 6; back >= 0; back--) {
+        final start = DateTime(now.year, now.month, now.day - back);
+        final end = back == 0
+            ? now
+            : DateTime(now.year, now.month, now.day - back + 1);
+        days.add(app.appUsage(start, end));
+      }
+      final yesterdayStart = DateTime(now.year, now.month, now.day - 1);
+      final yesterdaySoFar = app.appUsage(
+        yesterdayStart,
+        DateTime(now.year, now.month, now.day - 1, now.hour, now.minute),
+      );
+      final results = await Future.wait(days);
+      final soFar = await yesterdaySoFar;
+      if (!mounted) {
+        return;
+      }
+      final today = results.last;
+      setState(() {
+        _needAccess = false;
+        _usage = ScreenTimeReport(
+          today: topApps(today, 50),
+          weekMs: [for (final r in results) totalMs(r)],
+          yesterdaySoFarMs: totalMs(soFar),
+        );
+      });
+      for (final a in topApps(today, 5)) {
+        if (!_icons.containsKey(a.package)) {
+          final icon = await app.appIcon(a.package);
+          if (!mounted) {
+            return;
+          }
+          setState(() => _icons[a.package] = icon);
+        }
+      }
+    } finally {
+      _readingUsage = false;
     }
   }
 
@@ -126,6 +206,15 @@ class _PhoneScreenState extends State<PhoneScreen> with WidgetsBindingObserver {
     } else {
       children
         ..add(_BatteryCard(info: snap.battery))
+        ..add(const SizedBox(height: 12))
+        ..add(
+          _ScreenTimeCard(
+            report: _usage,
+            needAccess: _needAccess,
+            icons: _icons,
+            onAllow: () => AppScope.of(context).openUsageAccess(),
+          ),
+        )
         ..add(const SizedBox(height: 12))
         ..add(_DeviceCard(info: snap.device))
         ..add(const SizedBox(height: 12))
@@ -649,6 +738,310 @@ class _LinkRow extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ScreenTimeCard extends StatelessWidget {
+  const _ScreenTimeCard({
+    required this.report,
+    required this.needAccess,
+    required this.icons,
+    required this.onAllow,
+  });
+
+  final ScreenTimeReport? report;
+  final bool needAccess;
+  final Map<String, Uint8List?> icons;
+  final VoidCallback onAllow;
+
+  String _compare(AppLocalizations l, ScreenTimeReport r) {
+    final change = percentChange(r.todayMs, r.yesterdaySoFarMs);
+    if (change == null) {
+      return '';
+    }
+    if (change == 0) {
+      return l.screenTimeSame;
+    }
+    return change < 0
+        ? l.screenTimeLess(-change)
+        : l.screenTimeMore(change);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final p = SomnoPalette.of(context);
+    final r = report;
+
+    final head = Text(
+      l.screenTimeTitle,
+      style: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: p.text,
+      ),
+    );
+
+    if (needAccess) {
+      return Panel(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            head,
+            const SizedBox(height: 8),
+            Text(
+              l.screenTimeNeedAccess,
+              style: TextStyle(fontSize: 14, height: 1.45, color: p.muted),
+            ),
+            const SizedBox(height: 8),
+            TextAction(label: l.allowUsage, onTap: onAllow, color: p.primary),
+          ],
+        ),
+      );
+    }
+    if (r == null) {
+      return Panel(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            head,
+            const SizedBox(height: 8),
+            Text(
+              l.phoneLoading,
+              style: TextStyle(fontSize: 14, color: p.muted),
+            ),
+          ],
+        ),
+      );
+    }
+
+    final compare = _compare(l, r);
+    final top = topApps(r.today, 5);
+    final topMax = top.isEmpty ? 1 : top.first.ms;
+    final now = DateTime.now();
+    final weekMax = r.weekMs.fold<int>(0, (m, v) => v > m ? v : m);
+
+    return Panel(
+      padding: const EdgeInsets.all(18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          head,
+          const SizedBox(height: 2),
+          Text(
+            durationText(l, minutesOf(r.todayMs)),
+            style: TextStyle(
+              fontSize: 40,
+              fontWeight: FontWeight.w700,
+              letterSpacing: -1.2,
+              color: p.text,
+            ),
+          ),
+          if (compare.isNotEmpty)
+            Text(
+              compare,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: p.muted,
+              ),
+            ),
+          const SizedBox(height: 14),
+          if (top.isEmpty)
+            Text(
+              l.screenTimeNone,
+              style: TextStyle(fontSize: 14, color: p.muted),
+            )
+          else ...[
+            Text(
+              l.mostUsedToday,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                color: p.muted,
+              ),
+            ),
+            const SizedBox(height: 8),
+            for (final a in top)
+              _AppRow(
+                app: a,
+                icon: icons[a.package],
+                fraction: a.ms / topMax,
+                time: durationText(l, minutesOf(a.ms)),
+              ),
+          ],
+          const SizedBox(height: 14),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  l.screenTimeWeek,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: p.muted,
+                  ),
+                ),
+              ),
+              Text(
+                l.screenTimeAvg(durationText(l, minutesOf(r.weekAverageMs))),
+                style: TextStyle(fontSize: 13, color: p.muted),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 64,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                for (var i = 0; i < r.weekMs.length; i++) ...[
+                  if (i > 0) const SizedBox(width: 8),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: weekMax == 0
+                            ? 4
+                            : (4 + 60 * r.weekMs[i] / weekMax),
+                        decoration: BoxDecoration(
+                          color: i == r.weekMs.length - 1 ? p.primary : p.bar,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              for (var i = 0; i < r.weekMs.length; i++) ...[
+                if (i > 0) const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    weekdayShort(
+                      context,
+                      DateTime(
+                        now.year,
+                        now.month,
+                        now.day - (r.weekMs.length - 1 - i),
+                      ),
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: i == r.weekMs.length - 1
+                          ? FontWeight.w700
+                          : FontWeight.w400,
+                      color: i == r.weekMs.length - 1 ? p.text : p.muted,
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AppRow extends StatelessWidget {
+  const _AppRow({
+    required this.app,
+    required this.icon,
+    required this.fraction,
+    required this.time,
+  });
+
+  final AppUse app;
+  final Uint8List? icon;
+  final double fraction;
+  final String time;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = SomnoPalette.of(context);
+    final bytes = icon;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 36,
+            height: 36,
+            child: bytes == null
+                ? DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: p.track,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        app.label.isEmpty
+                            ? '?'
+                            : app.label.substring(0, 1).toUpperCase(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: p.primary,
+                        ),
+                      ),
+                    ),
+                  )
+                : ExcludeSemantics(
+                    child: Image.memory(
+                      bytes,
+                      width: 36,
+                      height: 36,
+                      gaplessPlayback: true,
+                    ),
+                  ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        app.label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: p.text,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      time,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: p.text,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                _Bar(fraction: fraction, color: p.primary, height: 6),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/services.dart' show Uint8List;
 import 'package:flutter/widgets.dart';
 
+import '../core/app_usage.dart';
 import '../core/sleep_logic.dart';
 import '../core/stats.dart';
 import '../core/version.dart';
@@ -180,6 +182,14 @@ class AppState extends ChangeNotifier {
 
   /// Battery and device facts, read live and never saved.
   Future<PhoneSnapshot?> phoneInfo() => _native.phoneInfo();
+
+  /// Apps with screen time between two moments. Read live, never saved.
+  Future<List<AppUse>> appUsage(DateTime from, DateTime to) => _native.appUsage(
+        from.millisecondsSinceEpoch,
+        to.millisecondsSinceEpoch,
+      );
+
+  Future<Uint8List?> appIcon(String package) => _native.appIcon(package);
 
   /// False when only the normal Settings opened instead of battery usage.
   Future<bool> openBatteryUsage() => _native.openBatteryUsage();
